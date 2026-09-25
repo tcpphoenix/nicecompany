@@ -161,14 +161,16 @@ const others = services.filter((s) => s.slug !== service.slug);
   .lead { font-size: var(--step-1); color: var(--steel); max-width: 34rem; line-height: 1.6; margin-bottom: 0.5rem; }
   .hero-dial { max-width: 30rem; width: 100%; justify-self: center; }
 
-  /* Five services: three across, then two wider cards. */
+  /* Three per row; a short last row stretches to fill the width. */
   .items {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 1rem;
   }
   .items li { grid-column: span 2; }
-  .items li:nth-child(n + 4) { grid-column: span 3; }
+  .items li:nth-child(3n + 1):nth-last-child(2),
+  .items li:nth-child(3n + 2):last-child { grid-column: span 3; }
+  .items li:nth-child(3n + 1):last-child { grid-column: span 6; }
   .items li {
     display: grid;
     gap: 0.5rem;
@@ -237,6 +239,6 @@ const others = services.filter((s) => s.slug !== service.slug);
     .problems-grid { grid-template-columns: 1fr; }
     .others-list { grid-template-columns: 1fr; }
     .items { grid-template-columns: 1fr; }
-    .items li, .items li:nth-child(n + 4) { grid-column: auto; }
+    .items li { grid-column: auto !important; }
   }
 </style>

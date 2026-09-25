@@ -9,6 +9,7 @@ const year = new Date().getFullYear();
     <div class="about">
       <p class="name">{site.name}</p>
       <p>გათბობის, გაგრილების და წყალმომარაგების სისტემების შეკეთება და მონტაჟი თბილისში.</p>
+      <p class="hours">სამუშაო საათები: {site.hours.days && `${site.hours.days}, `}{site.hours.time}</p>
     </div>
 
     <nav aria-label="სერვისები ქვედა მენიუში">
@@ -27,6 +28,7 @@ const year = new Date().getFullYear();
         <li><a href={telLink()}><Icon name="phone" size={16} /> {site.phone}</a></li>
         <li><a href={whatsappLink()} target="_blank" rel="noopener"><Icon name="whatsapp" size={16} /> WhatsApp</a></li>
         <li><a href={viberLink()}><Icon name="viber" size={16} /> Viber</a></li>
+        {site.facebook && <li><a href={site.facebook} target="_blank" rel="noopener">Facebook</a></li>}
       </ul>
     </div>
   </div>
@@ -55,7 +57,8 @@ const year = new Date().getFullYear();
     letter-spacing: 0.03em;
     margin-bottom: 0.5rem;
   }
-  .about p:last-child { max-width: 26rem; }
+  .about p { max-width: 26rem; }
+  .hours { margin-top: 0.75rem; color: var(--white); }
   .label { color: rgb(255 255 255 / 0.55); margin-bottom: 0.75rem; }
   ul { display: grid; gap: 0.4rem; }
   a {

@@ -118,16 +118,21 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
   .why { background: var(--white); border-block: 1px solid var(--line); }
   .why-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
   }
   .why-list li { display: grid; gap: 0.6rem; align-content: start; padding-top: 1.25rem; border-top: 3px solid var(--ink); }
   .why-list p { color: var(--steel); }
 
   .districts-section { padding-top: 0; }
 
+  @media (max-width: 1099px) {
+    .why-list { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+  }
   @media (max-width: 899px) {
     .hero-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 599px) {
     .why-list { grid-template-columns: 1fr; gap: 2rem; }
   }
 </style>

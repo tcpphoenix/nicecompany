@@ -46,16 +46,22 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
         </li>
       </ul>
 
-      {site.hours.length > 0 && (
-        <div class="hours">
-          <p class="label">სამუშაო საათები</p>
-          <dl>
-            {site.hours.map((h) => (
-              <div><dt>{h.days}</dt><dd>{h.time}</dd></div>
-            ))}
-          </dl>
+      <dl class="facts">
+        <div>
+          <dt class="label">სამუშაო საათები</dt>
+          <dd>{site.hours.days && `${site.hours.days}, `}{site.hours.time}</dd>
         </div>
-      )}
+        <div>
+          <dt class="label">გარანტია</dt>
+          <dd>ერთი თვე შესრულებულ სამუშაოზე</dd>
+        </div>
+        {site.facebook && (
+          <div>
+            <dt class="label">Facebook</dt>
+            <dd><a href={site.facebook} target="_blank" rel="noopener">ჩვენი გვერდი</a></dd>
+          </div>
+        )}
+      </dl>
     </div>
   </section>
 
@@ -93,11 +99,13 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
   .channel--call { background: var(--ink); border-color: var(--ink); color: var(--white); }
   .channel--call .c-label { color: rgb(255 255 255 / 0.7); }
 
-  .hours { margin-top: 2.5rem; }
-  .hours dl { display: grid; gap: 0.3rem; margin: 0.75rem 0 0; }
-  .hours div { display: flex; gap: 1rem; }
-  .hours dt { font-weight: 700; min-width: 8rem; }
-  .hours dd { margin: 0; }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 3rem;
+    margin: 2.25rem 0 0;
+  }
+  .facts dd { margin: 0.2rem 0 0; font-weight: 700; font-size: 1.15rem; }
 
   .area { padding-top: 2rem; }
 

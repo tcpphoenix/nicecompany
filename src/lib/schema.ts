@@ -23,7 +23,8 @@ export function businessSchema(siteUrl: URL) {
       { '@type': 'City', name: 'თბილისი' },
       ...site.districts.map((name) => ({ '@type': 'AdministrativeArea', name })),
     ],
-    ...(site.hours.length ? { openingHours: site.hours.map((h) => h.schema) } : {}),
+    ...(site.hours.schemaDays ? { openingHours: `${site.hours.schemaDays} ${site.hours.opens}-${site.hours.closes}` } : {}),
+    ...(site.facebook ? { sameAs: [site.facebook] } : {}),
   };
 }
 
