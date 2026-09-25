@@ -11,8 +11,6 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
       → `facebook` in `src/data/site.ts` (then it shows in the footer, on the contact page and in Google data).
 - [ ] **Work photos.** None yet. When he has some (before/after, installations), add a gallery to the site
       and upload them to the Google Business Profile.
-- [ ] **Diagnosis fee (50 ₾ for household equipment: boiler, kalonka, AC).** Koba said no prices on the site.
-      Confirm whether this one fee should be shown or not.
 - [ ] **Email address.** Needed to create the Google Business Profile (doesn't have to be shown on the site).
 - [ ] **Physical address or service-area only?** Decides how the Google Business Profile is set up.
 - [ ] **Customer reviews.** Ask happy customers for Google reviews once the Business Profile exists.
@@ -36,4 +34,5 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
 ## Done
 
 - [x] Services list, all brands, new installations, hours Mon–Sat 10:00–18:00, 1-month warranty, no prices, no emphasis on experience.
+- [x] Diagnosis fee (50 ₾, household equipment) is **not** shown on the site — decided 2026-09-25.
 - [x] Domain name chosen: `nisecompany.ge`.
