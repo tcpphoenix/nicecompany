@@ -1,0 +1,24 @@
+{
+  "name": "nisekompani",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ნისეკომპანი — გათბობა, გაგრილება, წყალმომარაგება თბილისში",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "assets": "node scripts/make-assets.mjs",
+    "test": "astro build && node --test tests/*.test.mjs",
+    "check:links": "linkinator dist --recurse"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/noto-sans-georgian": "^5.3.0",
+    "astro": "^7.3.5"
+  },
+  "devDependencies": {
+    "linkinator": "^8.1.0",
+    "sharp": "^0.35.4"
+  }
+}
