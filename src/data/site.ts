@@ -33,9 +33,7 @@ export const site = {
   phone: '+995 500 00 00 00',
   whatsapp: '+995 500 00 00 00',
   viber: '+995 500 00 00 00',
-  // TODO_KOBA: working days not confirmed yet. When known, set `days` (shown on site)
-  // and `schemaDays` (for Google, e.g. 'Mo-Sa').
-  hours: { time: '10:00–18:00', days: '', schemaDays: '', opens: '10:00', closes: '18:00' },
+  hours: { time: '10:00–18:00', days: 'ორშ–შაბ', schemaDays: 'Mo-Sa', opens: '10:00', closes: '18:00' },
   // TODO_KOBA: Facebook page URL.
   facebook: '',
   districts: [
