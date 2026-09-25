@@ -13,7 +13,7 @@ const { current } = Astro.props;
 <header class="header">
   <div class="wrap bar">
     <a class="brand" href={href('/')} aria-label={`${site.name} — მთავარი გვერდი`}>
-      <Image src={emblem} alt="" width={52} height={38} loading="eager" />
+      <Image src={emblem} alt="" width={52} height={38} densities={[1, 2, 3]} loading="eager" />
       <span class="wordmark"><span>ნისე</span><span class="wordmark-b">კომპანი</span></span>
     </a>
 

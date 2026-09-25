@@ -57,7 +57,9 @@ clearly marked placeholders (`TODO_…`) until the owner answers the open questi
 ## Design
 
 - Palette from the logo: fire orange (heating), ice blue (cooling), water teal
-  (water), dark navy base, off-white background.
+  (water), dark navy base, the logo's cool near-white (`#F4F7F9`) as background.
+- Signature element: a pressure-gauge dial built from the logo's three-part ring;
+  each segment links to its service and the needle follows hover/focus.
 - Each service page uses its own accent color.
 - Georgian typeface with good Mkhedruli support.
 - Mobile-first; sticky bottom action bar on phones (call / WhatsApp / Viber).
