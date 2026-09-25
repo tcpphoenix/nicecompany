@@ -1,0 +1,45 @@
+---
+import ContactButtons from './ContactButtons.astro';
+
+interface Props {
+  title: string;
+  text: string;
+}
+const { title, text } = Astro.props;
+---
+<section class="band" aria-labelledby="call-band-title">
+  <div class="wrap inner">
+    <div class="copy">
+      <h2 id="call-band-title">{title}</h2>
+      <p>{text}</p>
+    </div>
+    <ContactButtons tone="light" />
+  </div>
+</section>
+
+<style>
+  .band {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--white);
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+  }
+  /* The three currents, as a thin rule along the top edge. */
+  .band::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--fire) 0 33.33%, var(--ice) 33.33% 66.66%, var(--water) 66.66%);
+  }
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .copy { display: grid; gap: 0.6rem; max-width: 34rem; }
+  p { color: rgb(255 255 255 / 0.75); }
+</style>

@@ -1,0 +1,37 @@
+---
+import '../styles/global.css';
+import Seo from '../components/Seo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ContactBar from '../components/ContactBar.astro';
+import type { Accent } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  schema?: object[];
+  noindex?: boolean;
+  accent?: Accent;
+  /** Slug of the current nav item. */
+  current?: string;
+}
+const { accent, current, ...seo } = Astro.props;
+---
+<!doctype html>
+<html lang="ka">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Seo {...seo} />
+  </head>
+  <body data-accent={accent}>
+    <a class="skip" href="#main">გადასვლა შინაარსზე</a>
+    <Header current={current} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <ContactBar />
+  </body>
+</html>

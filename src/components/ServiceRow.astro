@@ -1,0 +1,87 @@
+---
+import Icon from './Icon.astro';
+import { href } from '../lib/href';
+import type { Service } from '../data/site';
+
+interface Props {
+  service: Service;
+}
+const { service } = Astro.props;
+---
+<article class="row" data-accent={service.accent}>
+  <div class="head">
+    <span class="badge"><Icon name={service.accent} size={28} /></span>
+    <h3><a href={href(`/${service.slug}/`)}>{service.name}</a></h3>
+    <p>{service.summary}</p>
+  </div>
+  <ul class="items">
+    {service.items.slice(0, 4).map((i) => (
+      <li><Icon name="check" size={18} /> {i.title}</li>
+    ))}
+  </ul>
+  <a class="more" href={href(`/${service.slug}/`)} aria-hidden="true" tabindex="-1">
+    ვრცლად <Icon name="arrow" size={18} />
+  </a>
+</article>
+
+<style>
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(15rem, 1fr) 1.4fr auto;
+    gap: 1.5rem 3rem;
+    align-items: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--line);
+  }
+  /* Accent rail that grows on hover — the service's "current". */
+  .row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 4.5rem;
+    height: 3px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+  .row:hover::before { width: 100%; }
+
+  .head { display: grid; grid-template-columns: auto 1fr; column-gap: 1rem; align-items: center; }
+  .badge {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--white);
+  }
+  h3 { font-size: var(--step-2); font-stretch: 78%; font-weight: 800; }
+  h3 a { text-decoration: none; }
+  /* Whole row is clickable through the heading link. */
+  h3 a::after { content: ''; position: absolute; inset: 0; }
+  .head p { color: var(--steel); font-size: 0.95rem; }
+
+  .items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.35rem 1.5rem; }
+  .items li { display: flex; gap: 0.5rem; align-items: baseline; line-height: 1.5; }
+  .items :global(svg) { flex: none; color: var(--accent-ink); transform: translateY(3px); }
+
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 700;
+    color: var(--accent-ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .more :global(svg) { transition: transform 0.2s ease; }
+  .row:hover .more :global(svg) { transform: translateX(4px); }
+
+  @media (max-width: 859px) {
+    .row { grid-template-columns: 1fr; gap: 1.25rem; }
+    .items { grid-template-columns: 1fr; }
+  }
+</style>

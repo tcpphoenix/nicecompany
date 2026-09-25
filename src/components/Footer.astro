@@ -1,0 +1,80 @@
+---
+import Icon from './Icon.astro';
+import { href } from '../lib/href';
+import { services, site, telLink, whatsappLink, viberLink } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="wrap grid">
+    <div class="about">
+      <p class="name">{site.name}</p>
+      <p>გათბობის, გაგრილების და წყალმომარაგების სისტემების შეკეთება და მონტაჟი თბილისში.</p>
+    </div>
+
+    <nav aria-label="სერვისები ქვედა მენიუში">
+      <p class="label">სერვისები</p>
+      <ul>
+        {services.map((s) => (
+          <li><a href={href(`/${s.slug}/`)}>{s.name}</a></li>
+        ))}
+        <li><a href={href('/kontaqti/')}>კონტაქტი</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="label">დაგვიკავშირდით</p>
+      <ul>
+        <li><a href={telLink()}><Icon name="phone" size={16} /> {site.phone}</a></li>
+        <li><a href={whatsappLink()} target="_blank" rel="noopener"><Icon name="whatsapp" size={16} /> WhatsApp</a></li>
+        <li><a href={viberLink()}><Icon name="viber" size={16} /> Viber</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap legal">
+    <p>© {year} {site.name} · თბილისი</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: rgb(255 255 255 / 0.82);
+    padding-block: 3.5rem 2rem;
+    font-size: 0.95rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 2.5rem;
+  }
+  .name {
+    color: var(--white);
+    font-weight: 800;
+    font-stretch: 80%;
+    font-size: 1.4rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.5rem;
+  }
+  .about p:last-child { max-width: 26rem; }
+  .label { color: rgb(255 255 255 / 0.55); margin-bottom: 0.75rem; }
+  ul { display: grid; gap: 0.4rem; }
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    text-decoration: none;
+    color: var(--white);
+  }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .legal {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: var(--step--1);
+    color: rgb(255 255 255 / 0.55);
+  }
+  /* Leave room for the fixed contact bar on phones. */
+  @media (max-width: 899px) {
+    .footer { padding-bottom: 6.5rem; }
+  }
+</style>

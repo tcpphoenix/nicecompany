@@ -1,0 +1,81 @@
+---
+import Icon from './Icon.astro';
+import { site, telLink, whatsappLink, viberLink } from '../data/site';
+
+interface Props {
+  /** "light" for use on dark backgrounds. */
+  tone?: 'dark' | 'light';
+}
+const { tone = 'dark' } = Astro.props;
+---
+<div class:list={['contact', `contact--${tone}`]}>
+  <a class="call" href={telLink()}>
+    <Icon name="phone" size={22} />
+    <span class="call-text">
+      <span class="call-label">დარეკეთ</span>
+      <span class="call-number">{site.phone}</span>
+    </span>
+  </a>
+  <div class="chat">
+    <a class="chat-btn chat-btn--wa" href={whatsappLink()} target="_blank" rel="noopener">
+      <Icon name="whatsapp" size={20} /> WhatsApp
+    </a>
+    <a class="chat-btn chat-btn--viber" href={viberLink()}>
+      <Icon name="viber" size={20} /> Viber
+    </a>
+  </div>
+</div>
+
+<style>
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  .call {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.8rem 1.4rem 0.8rem 1.1rem;
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .call:hover { background: #0d1520; transform: translateY(-1px); }
+  .call-text { display: grid; line-height: 1.25; }
+  .call-label { font-size: var(--step--1); opacity: 0.75; }
+  .call-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .chat { display: flex; gap: 0.75rem; }
+  .chat-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.1rem;
+    border: 1.5px solid var(--line);
+    background: var(--white);
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+  .chat-btn--wa :global(svg) { color: #1a9e4b; }
+  .chat-btn--viber :global(svg) { color: #6f5ce0; }
+  .chat-btn:hover { border-color: var(--ink); }
+
+  .contact--light .call { background: var(--white); color: var(--ink); }
+  .contact--light .call:hover { background: var(--frost); }
+  .contact--light .chat-btn { background: transparent; border-color: rgb(255 255 255 / 0.35); color: var(--white); }
+  .contact--light .chat-btn:hover { border-color: var(--white); }
+  .contact--light .chat-btn--wa :global(svg) { color: #5fe08f; }
+  .contact--light .chat-btn--viber :global(svg) { color: #b3a6ff; }
+</style>

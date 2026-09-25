@@ -1,0 +1,242 @@
+---
+import Base from '../layouts/Base.astro';
+import Gauge from '../components/Gauge.astro';
+import Icon from '../components/Icon.astro';
+import ContactButtons from '../components/ContactButtons.astro';
+import Steps from '../components/Steps.astro';
+import Districts from '../components/Districts.astro';
+import Faq from '../components/Faq.astro';
+import CallBand from '../components/CallBand.astro';
+import { services, type Service } from '../data/site';
+import { href } from '../lib/href';
+import { businessSchema, serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { service: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props as { service: Service };
+const root = new URL(import.meta.env.BASE_URL, Astro.site);
+const path = `/${service.slug}/`;
+const others = services.filter((s) => s.slug !== service.slug);
+---
+<Base
+  title={service.title}
+  description={service.description}
+  path={path}
+  accent={service.accent}
+  current={service.slug}
+  schema={[
+    businessSchema(root),
+    serviceSchema(root, service),
+    faqSchema(service.faq),
+    breadcrumbSchema(root, [
+      { name: 'მთავარი', path: '/' },
+      { name: service.name, path },
+    ]),
+  ]}
+>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <nav aria-label="ნავიგაციის ბილიკი" class="crumbs">
+          <a href={href('/')}>მთავარი</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{service.name}</span>
+        </nav>
+        <p class="label accent-label"><Icon name={service.accent} size={16} /> {service.name}</p>
+        <h1>{service.h1}</h1>
+        <p class="lead">{service.intro}</p>
+        <ContactButtons />
+      </div>
+      <div class="hero-dial">
+        <Gauge active={service.accent} legend={false} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section items-section" aria-labelledby="items-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">რას ვაკეთებთ</p>
+        <h2 id="items-title">{service.name}: სერვისები</h2>
+      </div>
+      <ul class="items">
+        {service.items.map((i) => (
+          <li>
+            <h3>{i.title}</h3>
+            <p>{i.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="problems-title">
+    <div class="wrap problems-grid">
+      <div class="section-head">
+        <p class="label">ხშირი პრობლემები</p>
+        <h2 id="problems-title">ეს გჭირთ?</h2>
+        <p>თუ რომელიმე ნაცნობია, დაგვირეკეთ. ადგილზე დავადგენთ მიზეზს და გეტყვით, რა უნდა გაკეთდეს.</p>
+      </div>
+      <ul class="problems">
+        {service.problems.map((p) => (
+          <li><Icon name="check" size={20} /> {p}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section tinted" aria-labelledby="steps-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">როგორ ვმუშაობთ</p>
+        <h2 id="steps-title">ზარიდან შეკეთებამდე</h2>
+      </div>
+      <Steps />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">კითხვები</p>
+        <h2 id="faq-title">ხშირად დასმული კითხვები</h2>
+      </div>
+      <Faq items={service.faq} />
+    </div>
+  </section>
+
+  <section class="section districts-section">
+    <div class="wrap">
+      <Districts />
+    </div>
+  </section>
+
+  <section class="section others" aria-labelledby="others-title">
+    <div class="wrap">
+      <h2 id="others-title" class="others-title">სხვა სერვისები</h2>
+      <ul class="others-list">
+        {others.map((o) => (
+          <li data-accent={o.accent}>
+            <a href={href(`/${o.slug}/`)}>
+              <span class="o-icon"><Icon name={o.accent} size={22} /></span>
+              <span class="o-text">
+                <span class="o-name">{o.name}</span>
+                <span class="o-sum">{o.summary}</span>
+              </span>
+              <Icon name="arrow" size={20} class="o-arrow" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CallBand
+    title={`${service.name}: დაგვირეკეთ`}
+    text="გვითხარით, რა პრობლემაა და რომელ რაიონში ხართ — შევთანხმდებით ვიზიტის დროზე."
+  />
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(1.5rem, 1rem + 3vw, 4rem) clamp(2.5rem, 1rem + 5vw, 5rem);
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(60rem 30rem at 85% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
+      var(--frost);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: center;
+  }
+  .hero-copy { display: grid; gap: 1.1rem; justify-items: start; }
+  .crumbs { display: flex; gap: 0.5rem; font-size: var(--step--1); color: var(--steel); }
+  .crumbs a { color: var(--steel); }
+  .accent-label { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent-ink); }
+  .lead { font-size: var(--step-1); color: var(--steel); max-width: 34rem; line-height: 1.6; margin-bottom: 0.5rem; }
+  .hero-dial { max-width: 30rem; width: 100%; justify-self: center; }
+
+  /* Five services: three across, then two wider cards. */
+  .items {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+  }
+  .items li { grid-column: span 2; }
+  .items li:nth-child(n + 4) { grid-column: span 3; }
+  .items li {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding: 1.5rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--accent);
+    border-radius: var(--radius);
+  }
+  .items p { color: var(--steel); }
+
+  .problems-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2rem 4rem;
+    align-items: start;
+  }
+  .problems { display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .problems li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--line);
+    font-weight: 600;
+    font-size: 1.08rem;
+  }
+  .problems :global(svg) { flex: none; color: var(--accent-ink); transform: translateY(4px); }
+
+  .tinted { background: var(--white); border-block: 1px solid var(--line); }
+  .districts-section { padding-bottom: 0; }
+
+  .others-title { font-size: var(--step-2); margin-bottom: 1.25rem; }
+  .others-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .others-list a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.4rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .others-list a:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .o-icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--white);
+  }
+  .o-text { display: grid; flex: 1; }
+  .o-name { font-weight: 800; font-stretch: 85%; font-size: 1.2rem; }
+  .o-sum { color: var(--steel); font-size: 0.95rem; }
+  .others-list :global(.o-arrow) { color: var(--accent-ink); flex: none; }
+
+  @media (max-width: 899px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-dial { max-width: 22rem; }
+    .problems-grid { grid-template-columns: 1fr; }
+    .others-list { grid-template-columns: 1fr; }
+    .items { grid-template-columns: 1fr; }
+    .items li, .items li:nth-child(n + 4) { grid-column: auto; }
+  }
+</style>

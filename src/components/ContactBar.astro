@@ -1,0 +1,44 @@
+---
+// Fixed bottom bar on phones: the fastest route from "it's broken" to a call.
+import Icon from './Icon.astro';
+import { telLink, whatsappLink, viberLink } from '../data/site';
+---
+<nav class="contact-bar" aria-label="დაგვიკავშირდით">
+  <a class="cb cb--call" href={telLink()}><Icon name="phone" size={20} /> დარეკვა</a>
+  <a class="cb" href={whatsappLink()} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} class="wa" /> WhatsApp</a>
+  <a class="cb" href={viberLink()}><Icon name="viber" size={20} class="vb" /> Viber</a>
+</nav>
+
+<style>
+  .contact-bar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem calc(0.6rem + env(safe-area-inset-bottom));
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 24px rgb(23 34 49 / 0.08);
+  }
+  .cb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 3rem;
+    border-radius: 12px;
+    border: 1.5px solid var(--line);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+  .cb--call { background: var(--ink); border-color: var(--ink); color: var(--white); }
+  .cb :global(.wa) { color: #1a9e4b; }
+  .cb :global(.vb) { color: #6f5ce0; }
+
+  @media (min-width: 900px) {
+    .contact-bar { display: none; }
+  }
+</style>

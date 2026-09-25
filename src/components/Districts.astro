@@ -1,0 +1,41 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+---
+<div class="districts">
+  <div class="intro">
+    <p class="label">მომსახურების არეალი</p>
+    <h2>ვმუშაობთ თბილისის ყველა რაიონში</h2>
+  </div>
+  <ul>
+    {site.districts.map((d) => (
+      <li><Icon name="pin" size={16} /> {d}</li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .districts {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 2rem 4rem;
+    align-items: center;
+  }
+  .intro { display: grid; gap: 0.75rem; }
+  ul { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem 0.5rem 0.8rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  li :global(svg) { color: var(--accent); }
+
+  @media (max-width: 859px) {
+    .districts { grid-template-columns: 1fr; }
+  }
+</style>

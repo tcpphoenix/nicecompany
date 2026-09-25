@@ -1,0 +1,107 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Districts from '../components/Districts.astro';
+import { site, telLink, whatsappLink, viberLink } from '../data/site';
+import { businessSchema, breadcrumbSchema } from '../lib/schema';
+
+const root = new URL(import.meta.env.BASE_URL, Astro.site);
+---
+<Base
+  title="კონტაქტი — დაგვირეკეთ ან მოგვწერეთ | ნისეკომპანი"
+  description="დაგვიკავშირდით ტელეფონით, WhatsApp-ით ან Viber-ით. გათბობის, გაგრილების და წყალმომარაგების სისტემების შეკეთება თბილისის ყველა რაიონში."
+  path="/kontaqti/"
+  current="kontaqti"
+  schema={[businessSchema(root), breadcrumbSchema(root, [{ name: 'მთავარი', path: '/' }, { name: 'კონტაქტი', path: '/kontaqti/' }])]}
+>
+  <section class="section contact">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">კონტაქტი</p>
+        <h1>დაგვირეკეთ ან მოგვწერეთ</h1>
+        <p>გვითხარით, რა პრობლემაა და რომელ რაიონში ხართ — შევთანხმდებით ვიზიტის დროზე.</p>
+      </div>
+
+      <ul class="channels">
+        <li>
+          <a class="channel channel--call" href={telLink()}>
+            <Icon name="phone" size={28} />
+            <span class="c-label">დარეკეთ</span>
+            <span class="c-value">{site.phone}</span>
+          </a>
+        </li>
+        <li>
+          <a class="channel" href={whatsappLink()} target="_blank" rel="noopener">
+            <Icon name="whatsapp" size={28} class="wa" />
+            <span class="c-label">მოგვწერეთ</span>
+            <span class="c-value">WhatsApp</span>
+          </a>
+        </li>
+        <li>
+          <a class="channel" href={viberLink()}>
+            <Icon name="viber" size={28} class="vb" />
+            <span class="c-label">მოგვწერეთ</span>
+            <span class="c-value">Viber</span>
+          </a>
+        </li>
+      </ul>
+
+      {site.hours.length > 0 && (
+        <div class="hours">
+          <p class="label">სამუშაო საათები</p>
+          <dl>
+            {site.hours.map((h) => (
+              <div><dt>{h.days}</dt><dd>{h.time}</dd></div>
+            ))}
+          </dl>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="section area">
+    <div class="wrap">
+      <Districts />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact { padding-bottom: 2rem; }
+  .channels {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 1rem;
+  }
+  .channel {
+    display: grid;
+    gap: 0.25rem;
+    height: 100%;
+    padding: 1.75rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    text-decoration: none;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .channel:hover { transform: translateY(-2px); border-color: var(--ink); }
+  .channel :global(svg) { margin-bottom: 1rem; }
+  .channel :global(.wa) { color: #1a9e4b; }
+  .channel :global(.vb) { color: #6f5ce0; }
+  .c-label { color: var(--steel); font-size: 0.95rem; }
+  .c-value { font-size: var(--step-2); font-weight: 800; font-stretch: 85%; font-variant-numeric: tabular-nums; }
+  .channel--call { background: var(--ink); border-color: var(--ink); color: var(--white); }
+  .channel--call .c-label { color: rgb(255 255 255 / 0.7); }
+
+  .hours { margin-top: 2.5rem; }
+  .hours dl { display: grid; gap: 0.3rem; margin: 0.75rem 0 0; }
+  .hours div { display: flex; gap: 1rem; }
+  .hours dt { font-weight: 700; min-width: 8rem; }
+  .hours dd { margin: 0; }
+
+  .area { padding-top: 2rem; }
+
+  @media (max-width: 759px) {
+    .channels { grid-template-columns: 1fr; }
+  }
+</style>

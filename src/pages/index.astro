@@ -1,3 +1,133 @@
 ---
+import Base from '../layouts/Base.astro';
+import Gauge from '../components/Gauge.astro';
+import ContactButtons from '../components/ContactButtons.astro';
+import ServiceRow from '../components/ServiceRow.astro';
+import Steps from '../components/Steps.astro';
+import Districts from '../components/Districts.astro';
+import CallBand from '../components/CallBand.astro';
+import { services, whyUs } from '../data/site';
+import { businessSchema } from '../lib/schema';
+
+const root = new URL(import.meta.env.BASE_URL, Astro.site);
 ---
-<p>stub</p>
+<Base
+  title="ნისეკომპანი — გათბობა, გაგრილება, წყალმომარაგება თბილისში"
+  description="ქვაბების, კონდიციონერების, ბოილერების და ტუმბოების შეკეთება და მონტაჟი თბილისის ყველა რაიონში. დაგვირეკეთ ან მოგვწერეთ WhatsApp-ზე და Viber-ზე."
+  path="/"
+  schema={[businessSchema(root)]}
+>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="label">თბილისი · ყველა რაიონი</p>
+        <h1>გათბობის, გაგრილების და წყლის ხელოსანი თბილისში</h1>
+        <p class="lead">
+          ქვაბი, კონდიციონერი, ბოილერი, ტუმბო თუ მილები — მოვალთ, დავადგენთ მიზეზს და შევაკეთებთ.
+        </p>
+        <ContactButtons />
+      </div>
+
+      <div class="hero-dial">
+        <p class="dial-q">რა გაფუჭდა?</p>
+        <Gauge />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="services-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">სერვისები</p>
+        <h2 id="services-title">სამი სისტემა, ერთი ხელოსანი</h2>
+      </div>
+      <div class="rows">
+        {services.map((s) => <ServiceRow service={s} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section why" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">რატომ ჩვენ</p>
+        <h2 id="why-title">მარტივად და გასაგებად</h2>
+      </div>
+      <ul class="why-list">
+        {whyUs.map((w) => (
+          <li>
+            <h3>{w.title}</h3>
+            <p>{w.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="steps-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">როგორ ვმუშაობთ</p>
+        <h2 id="steps-title">ზარიდან შეკეთებამდე</h2>
+      </div>
+      <Steps />
+    </div>
+  </section>
+
+  <section class="section districts-section">
+    <div class="wrap">
+      <Districts />
+    </div>
+  </section>
+
+  <CallBand
+    title="რამე გაფუჭდა?"
+    text="დაგვირეკეთ ან მოგვწერეთ — გვითხარით, რა პრობლემაა და რომელ რაიონში ხართ."
+  />
+</Base>
+
+<style>
+  .hero { padding-block: clamp(1.5rem, 1rem + 4vw, 4.5rem) 0; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: center;
+  }
+  .hero-copy { display: grid; gap: 1.25rem; justify-items: start; }
+  .hero-copy h1 { max-width: 13em; }
+  .lead { font-size: var(--step-1); color: var(--steel); max-width: 30rem; line-height: 1.6; margin-bottom: 0.5rem; }
+
+  .hero-dial {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    padding: clamp(1.25rem, 0.8rem + 2vw, 2.25rem);
+    box-shadow: 0 30px 60px -30px rgb(23 34 49 / 0.25);
+  }
+  .dial-q {
+    font-weight: 800;
+    font-stretch: 80%;
+    font-size: var(--step-2);
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .rows { border-bottom: 1px solid var(--line); }
+
+  .why { background: var(--white); border-block: 1px solid var(--line); }
+  .why-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+  .why-list li { display: grid; gap: 0.6rem; align-content: start; padding-top: 1.25rem; border-top: 3px solid var(--ink); }
+  .why-list p { color: var(--steel); }
+
+  .districts-section { padding-top: 0; }
+
+  @media (max-width: 899px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .why-list { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>
