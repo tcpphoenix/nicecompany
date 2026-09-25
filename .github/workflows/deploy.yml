@@ -1,0 +1,41 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Temporary address until the real domain is connected.
+      # When it is: delete these two lines and set `site` in astro.config.mjs.
+      SITE_URL: https://tcpphoenix.github.io
+      BASE_PATH: /nicecompany
+    steps:
+      - uses: actions/checkout@v7
+      # Builds the site and runs the SEO checks; a failing check stops the deploy.
+      - uses: withastro/action@v6
+        with:
+          build-cmd: npm test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
