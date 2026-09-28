@@ -23,9 +23,10 @@
   --water: #0f8283;
   --water-ink: #0b6d6e;
 
-  /* The current page's accent; service pages override it. */
-  --accent: var(--water);
-  --accent-ink: var(--water-ink);
+  /* Accent for markers, rules and bullets: brand blue everywhere.
+     Service colours appear only on icons (via [data-accent] on the icon's container). */
+  --accent: var(--blue);
+  --accent-ink: var(--blue-600);
 
   --font: 'Noto Sans Georgian Variable', 'Noto Sans Georgian', 'Sylfaen', system-ui, sans-serif;
 
@@ -98,8 +99,8 @@ img, svg { display: block; max-width: 100%; }
 .label {
   font-size: 0.9375rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--steel);
+  letter-spacing: 0.06em;
+  color: var(--blue-600);
 }
 
 .section { padding-block: clamp(3rem, 2rem + 4vw, 5.5rem); }

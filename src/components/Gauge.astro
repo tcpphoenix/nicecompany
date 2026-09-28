@@ -10,8 +10,10 @@ interface Props {
   active?: Accent;
   /** Show the labelled links under the dial. */
   legend?: boolean;
+  /** "dark" when placed on a navy panel. */
+  tone?: 'light' | 'dark';
 }
-const { active, legend = true } = Astro.props;
+const { active, legend = true, tone = 'light' } = Astro.props;
 
 const cx = 200, cy = 212, R = 188, r = 124;
 const rad = (deg: number) => (deg * Math.PI) / 180;
@@ -39,7 +41,7 @@ const ticks = Array.from({ length: 19 }, (_, i) => {
   return { from: pt(R + 8, deg), to: pt(R + (major ? 20 : 14), deg), major };
 });
 ---
-<div class="gauge" data-active={active} style={`--rest: ${active ? needleAngle[active] : 0}deg`}>
+<div class:list={['gauge', `gauge--${tone}`]} data-active={active} style={`--rest: ${active ? needleAngle[active] : 0}deg`}>
   <svg class="dial" viewBox="0 0 400 236" aria-hidden="true" focusable="false">
     <g class="ticks">
       {ticks.map((t) => <path d={`M ${t.from} L ${t.to}`} class:list={{ major: t.major }} />)}
@@ -156,8 +158,16 @@ const ticks = Array.from({ length: 19 }, (_, i) => {
 
   /* Stack the legend whenever the dial's own box is narrow, not only on phones:
      "წყალმომარაგება" is one long word that can't share a third of a narrow box. */
-  @container (max-width: 420px) {
+  @container (max-width: 520px) {
     .legend { grid-template-columns: 1fr; gap: 0.25rem; }
     .legend a { border-color: var(--line); }
   }
+  /* Dark panel variant (home page dial section). */
+  .gauge--dark .ticks path { stroke: rgb(255 255 255 / 0.18); }
+  .gauge--dark .ticks path.major { stroke: rgb(255 255 255 / 0.45); }
+  .gauge--dark .needle { fill: var(--white); }
+  .gauge--dark .hub-dot { fill: var(--navy-900); }
+  .gauge--dark .legend a { color: var(--white); border-color: rgb(255 255 255 / 0.14); }
+  .gauge--dark .legend a:hover { background: rgb(255 255 255 / 0.06); border-color: rgb(255 255 255 / 0.3); }
+  .gauge--dark .legend-sum { color: rgb(255 255 255 / 0.68); }
 </style>
