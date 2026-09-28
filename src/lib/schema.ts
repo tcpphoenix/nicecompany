@@ -1,5 +1,5 @@
 // JSON-LD builders. Google reads these to understand the business and pages.
-import { site, business, type Faq, type Service } from '../data/site';
+import { site, business, about, type Faq, type Service } from '../data/site';
 
 const abs = (siteUrl: URL, path: string) => new URL(path.replace(/^\//, ''), siteUrl).href;
 
@@ -81,5 +81,15 @@ export function businessServiceSchema(siteUrl: URL) {
     provider: { '@id': abs(siteUrl, '/#business') },
     areaServed: { '@type': 'City', name: 'თბილისი' },
     audience: { '@type': 'BusinessAudience', name: business.sectors.map((s) => s.name).join(', ') },
+  };
+}
+
+export function aboutPageSchema(siteUrl: URL) {
+  return {
+    '@type': 'AboutPage',
+    name: about.title,
+    description: about.description,
+    url: abs(siteUrl, '/chven-shesakheb/'),
+    about: { '@id': abs(siteUrl, '/#business') },
   };
 }

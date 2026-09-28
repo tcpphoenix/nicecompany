@@ -13,6 +13,7 @@ const pages = {
   '/tskalmomarageba/': 'tskalmomarageba/index.html',
   '/kontaqti/': 'kontaqti/index.html',
   '/biznesi/': 'biznesi/index.html',
+  '/chven-shesakheb/': 'chven-shesakheb/index.html',
 };
 const servicePaths = ['/gatboba/', '/gagrileba/', '/tskalmomarageba/'];
 
@@ -133,4 +134,13 @@ test('Georgian capitals (Mtavruli) are covered by the shipped font', () => {
   const css = cssFiles.map((f) => read(`_astro/${f}`)).join('\n');
   assert.match(css, /unicode-range:[^;]*U\+1C90-1CBA/i);
   for (const file of Object.values(pages)) assert.doesNotMatch(read(file), /�/, `${file} has replacement chars`);
+});
+
+test('/chven-shesakheb/ is an About page with breadcrumbs', () => {
+  const t = types(read(pages['/chven-shesakheb/']));
+  for (const want of ['AboutPage', 'BreadcrumbList']) assert.ok(t.includes(want), `${want} in ${t}`);
+});
+
+test('header links to the About page', () => {
+  assert.match(read(pages['/']), /href="[^"]*\/chven-shesakheb\/"/);
 });
