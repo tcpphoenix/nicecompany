@@ -5,8 +5,6 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
 
 ## Waiting on Koba
 
-- [ ] **Phone number.** Koba is getting a new one. The same number is used for calls, WhatsApp and Viber.
-      → `phone`, `whatsapp`, `viber` in `src/data/site.ts`.
 - [ ] **Facebook page.** Not created yet. When it exists, add the link.
       → `facebook` in `src/data/site.ts` (then it shows in the footer, on the contact page and in Google data).
 - [ ] **Work photos.** None yet. When he has some (before/after, installations), add a gallery to the site
@@ -43,4 +41,5 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
 - [x] Services list, all brands, new installations, hours Mon–Sat 10:00–18:00, 1-month warranty, no prices, no emphasis on experience.
 - [x] Diagnosis fee (50 ₾, household equipment) is **not** shown on the site — decided 2026-09-25.
 - [x] Domain name chosen: `nisecompany.ge`.
+- [x] Phone number +995 571 09 34 95 (calls, WhatsApp, Viber) — 2026-09-28.
 - [x] Business clients page `/biznesi/` (contract + per-visit, 6 sectors, service calendar) — 2026-09-28. Offer PDF updated to 6 pages.

@@ -31,10 +31,10 @@ export const site = {
   nameLatin: 'Nisekompani',
   tagline: 'გათბობა · გაგრილება · წყალმომარაგება',
   city: 'თბილისი',
-  // TODO_KOBA: real phone number. Same number is used for WhatsApp and Viber unless changed.
-  phone: '+995 500 00 00 00',
-  whatsapp: '+995 500 00 00 00',
-  viber: '+995 500 00 00 00',
+  // Same number is used for calls, WhatsApp and Viber.
+  phone: '+995 571 09 34 95',
+  whatsapp: '+995 571 09 34 95',
+  viber: '+995 571 09 34 95',
   hours: { time: '10:00–18:00', days: 'ორშ–შაბ', schemaDays: 'Mo-Sa', opens: '10:00', closes: '18:00' },
   // TODO_KOBA: Facebook page URL.
   facebook: '',
