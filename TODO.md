@@ -7,8 +7,9 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
 
 - [ ] **Facebook page.** Not created yet. When it exists, add the link.
       → `facebook` in `src/data/site.ts` (then it shows in the footer, on the contact page and in Google data).
-- [ ] **Work photos.** None yet. When he has some (before/after, installations), add a gallery to the site
-      and upload them to the Google Business Profile.
+- [ ] **Work photos.** None yet. The site currently uses 6 free stock photos (Pexels, listed in
+      `src/assets/photos/CREDITS.md`). Replace them one by one with Koba's real photos (same file names),
+      then add a "პროექტები" (Projects) page and upload photos to the Google Business Profile.
 - [ ] **Email address.** Needed to create the Google Business Profile (doesn't have to be shown on the site).
 - [ ] **Physical address or service-area only?** Decides how the Google Business Profile is set up.
 - [ ] **Customer reviews.** Ask happy customers for Google reviews once the Business Profile exists.
@@ -42,4 +43,5 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
 - [x] Diagnosis fee (50 ₾, household equipment) is **not** shown on the site — decided 2026-09-25.
 - [x] Domain name chosen: `nisecompany.ge`.
 - [x] Phone number +995 571 09 34 95 (calls, WhatsApp, Viber) — 2026-09-28.
+- [x] Redesign in the ChatGPT concept's direction (navy + blue, photo headers) + About page — 2026-09-28. Offer PDF updated to 7 pages.
 - [x] Business clients page `/biznesi/` (contract + per-visit, 6 sectors, service calendar) — 2026-09-28. Offer PDF updated to 6 pages.
