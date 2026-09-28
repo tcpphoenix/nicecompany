@@ -157,6 +157,7 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
     align-items: center;
   }
   .hero-copy { display: grid; gap: 1.1rem; justify-items: start; }
+  .hero-copy h1 { font-size: var(--step-3); max-width: 18em; }
   .crumbs { display: flex; gap: 0.5rem; font-size: var(--step--1); color: var(--steel); }
   .crumbs a { color: var(--steel); }
   .lead { font-size: var(--step-1); color: var(--steel); max-width: 36rem; line-height: 1.6; margin-bottom: 0.5rem; }
@@ -214,8 +215,9 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
     padding: 0.6rem 1.1rem 0.6rem 0.85rem;
     background: var(--white);
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: 14px;
     font-weight: 600;
+    line-height: 1.4;
   }
   .equipment li :global(svg) { flex: none; color: var(--accent); }
 

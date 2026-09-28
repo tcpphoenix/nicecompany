@@ -15,6 +15,13 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
 - [ ] **Physical address or service-area only?** Decides how the Google Business Profile is set up.
 - [ ] **Customer reviews.** Ask happy customers for Google reviews once the Business Profile exists.
 
+## Business page (`/biznesi/`) — confirm with Koba
+
+- [ ] **Invoices.** Can Koba issue invoices to companies (individual entrepreneur / LLC)? If yes, add it to the business page — companies look for it.
+- [ ] **Service calendar.** The page shows heating checks in Sep–Oct, cooling in Apr–May, water quarterly, emergency call-outs any time. Confirm this matches how he wants to work.
+- [ ] **Contract promises.** Page promises: scheduled visits, seasonal preparation, priority call-outs, a record of all work done. Confirm he can deliver all four.
+- [ ] **Business references.** Any hotels / restaurants / offices he already serves (with permission) — strongest proof for business clients.
+
 ## Domain: `nisecompany.ge`
 
 - [ ] Register `nisecompany.ge` **in Koba's name** (~30–60 ₾/year).
@@ -36,3 +43,4 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
 - [x] Services list, all brands, new installations, hours Mon–Sat 10:00–18:00, 1-month warranty, no prices, no emphasis on experience.
 - [x] Diagnosis fee (50 ₾, household equipment) is **not** shown on the site — decided 2026-09-25.
 - [x] Domain name chosen: `nisecompany.ge`.
+- [x] Business clients page `/biznesi/` (contract + per-visit, 6 sectors, service calendar) — 2026-09-28. Offer PDF updated to 6 pages.

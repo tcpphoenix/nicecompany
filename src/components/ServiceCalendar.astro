@@ -74,13 +74,17 @@ const rows = business.calendar.map((row) => {
     color: var(--steel);
     text-align: center;
   }
+  thead th { position: relative; }
   thead th.now { color: var(--ink); }
+  /* Dot under the current month, positioned so it doesn't shift the labels. */
   thead th.now::after {
     content: '';
-    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 0.2rem;
     width: 5px;
     height: 5px;
-    margin: 0.25rem auto 0;
+    margin-left: -2.5px;
     border-radius: 50%;
     background: var(--ink);
   }
@@ -127,7 +131,8 @@ const rows = business.calendar.map((row) => {
       align-items: center;
     }
     .corner { display: none; }
-    thead th { font-size: 0.62rem; padding-bottom: 0.4rem; }
+    thead th { font-size: 0.66rem; padding-bottom: 0.55rem; }
+    thead th.now::after { bottom: 0; width: 4px; height: 4px; margin-left: -2px; }
     tbody th { grid-column: 1 / -1; padding: 0.8rem 0 0.4rem; }
     tbody tr + tr > * { border-top: 0; }
     tbody tr + tr { border-top: 1px solid var(--line); }
