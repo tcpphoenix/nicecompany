@@ -18,6 +18,7 @@ const year = new Date().getFullYear();
         {services.map((s) => (
           <li><a href={href(`/${s.slug}/`)}>{s.name}</a></li>
         ))}
+        <li><a href={href('/biznesi/')}>ბიზნესისთვის</a></li>
         <li><a href={href('/kontaqti/')}>კონტაქტი</a></li>
       </ul>
     </nav>

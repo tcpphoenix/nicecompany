@@ -7,6 +7,7 @@ import Steps from '../components/Steps.astro';
 import Districts from '../components/Districts.astro';
 import Faq from '../components/Faq.astro';
 import CallBand from '../components/CallBand.astro';
+import BusinessNote from '../components/BusinessNote.astro';
 import { services, type Service } from '../data/site';
 import { href } from '../lib/href';
 import { businessSchema, serviceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
@@ -85,6 +86,7 @@ const others = services.filter((s) => s.slug !== service.slug);
         ))}
       </ul>
     </div>
+    <div class="wrap"><BusinessNote text={service.business} /></div>
   </section>
 
   <section class="section tinted" aria-labelledby="steps-title">

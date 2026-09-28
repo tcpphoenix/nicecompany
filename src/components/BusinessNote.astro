@@ -1,0 +1,49 @@
+---
+// Service-page pointer to the business offer.
+import Icon from './Icon.astro';
+import { href } from '../lib/href';
+
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+<aside class="note" aria-label="ბიზნესისთვის">
+  <span class="tag">ბიზნესისთვის</span>
+  <p>{text}</p>
+  <a href={href('/biznesi/')}>ხელშეკრულებით მომსახურება <Icon name="arrow" size={18} /></a>
+</aside>
+
+<style>
+  .note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-top: 2.5rem;
+    padding: 1.1rem 1.4rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--ink);
+    border-radius: var(--radius);
+  }
+  .tag {
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  p { flex: 1 1 20rem; color: var(--steel); }
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+</style>

@@ -32,6 +32,9 @@ const { current } = Astro.props;
           </li>
         ))}
         <li>
+          <a href={href('/biznesi/')} aria-current={current === 'biznesi' ? 'page' : undefined}>ბიზნესისთვის</a>
+        </li>
+        <li>
           <a href={href('/kontaqti/')} aria-current={current === 'kontaqti' ? 'page' : undefined}>კონტაქტი</a>
         </li>
       </ul>

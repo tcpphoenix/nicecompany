@@ -6,6 +6,7 @@ import ServiceRow from '../components/ServiceRow.astro';
 import Steps from '../components/Steps.astro';
 import Districts from '../components/Districts.astro';
 import CallBand from '../components/CallBand.astro';
+import AudienceChoice from '../components/AudienceChoice.astro';
 import { services, whyUs } from '../data/site';
 import { businessSchema } from '../lib/schema';
 
@@ -35,7 +36,13 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
     </div>
   </section>
 
-  <section class="section" aria-labelledby="services-title">
+  <section class="audience" aria-label="ვისთვის">
+    <div class="wrap">
+      <AudienceChoice />
+    </div>
+  </section>
+
+  <section class="section" id="services" aria-labelledby="services-title">
     <div class="wrap">
       <div class="section-head">
         <p class="label">სერვისები</p>
@@ -112,6 +119,9 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
     text-align: center;
     margin-bottom: 0.75rem;
   }
+
+  .audience { padding-top: clamp(2rem, 1rem + 3vw, 3.5rem); }
+  #services { scroll-margin-top: 5rem; }
 
   .rows { border-bottom: 1px solid var(--line); }
 

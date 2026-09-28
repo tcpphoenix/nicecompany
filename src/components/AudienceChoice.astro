@@ -1,0 +1,49 @@
+---
+// Home page split: households go to the services below, businesses to /biznesi/.
+import Icon from './Icon.astro';
+import { href } from '../lib/href';
+---
+<div class="choice">
+  <a class="card" href={`${href('/')}#services`}>
+    <span class="kicker">სახლისთვის</span>
+    <span class="title">შეკეთება და მონტაჟი ბინაში თუ სახლში</span>
+    <span class="text">ქვაბი, კონდიციონერი, ბოილერი, ტუმბო — გამოძახებით.</span>
+    <span class="go">სერვისები <Icon name="arrow" size={18} /></span>
+  </a>
+  <a class="card card--biz" href={href('/biznesi/')}>
+    <span class="kicker">ბიზნესისთვის</span>
+    <span class="title">მომსახურება ხელშეკრულებით ან გამოძახებით</span>
+    <span class="text">სასტუმროები, რესტორნები, ოფისები, ამხანაგობები, მაღაზიები, კლინიკები.</span>
+    <span class="go">ბიზნესისთვის <Icon name="arrow" size={18} /></span>
+  </a>
+</div>
+
+<style>
+  .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .card {
+    display: grid;
+    gap: 0.4rem;
+    align-content: start;
+    padding: clamp(1.4rem, 1rem + 1.5vw, 2rem);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    text-decoration: none;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .card:hover { transform: translateY(-2px); border-color: var(--ink); }
+  .kicker { font-weight: 700; font-size: 0.9rem; color: var(--steel); }
+  .title { font-weight: 800; font-stretch: 82%; font-size: var(--step-2); line-height: 1.2; }
+  .text { color: var(--steel); }
+  .go { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.5rem; font-weight: 700; }
+  .go :global(svg) { transition: transform 0.2s ease; }
+  .card:hover .go :global(svg) { transform: translateX(4px); }
+
+  .card--biz { background: var(--ink); border-color: var(--ink); color: var(--white); }
+  .card--biz:hover { border-color: var(--ink); }
+  .card--biz .kicker, .card--biz .text { color: rgb(255 255 255 / 0.7); }
+
+  @media (max-width: 700px) {
+    .choice { grid-template-columns: 1fr; }
+  }
+</style>
