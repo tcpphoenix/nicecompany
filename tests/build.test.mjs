@@ -1,7 +1,7 @@
 // Checks the built site (dist/) the way a search engine sees it.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 
 const dist = new URL('../dist/', import.meta.url);
 const read = (p) => readFileSync(new URL(p, dist), 'utf8');
@@ -126,4 +126,11 @@ test('emergency call-outs are not promised outside working hours', () => {
   const html = read(pages['/biznesi/']);
   assert.doesNotMatch(html, /ნებისმიერ დროს/);
   assert.match(html, /ავარიული გამოძახება[\s\S]{0,400}10:00–18:00/);
+});
+
+test('Georgian capitals (Mtavruli) are covered by the shipped font', () => {
+  const cssFiles = readdirSync(new URL('_astro/', dist)).filter((f) => f.endsWith('.css'));
+  const css = cssFiles.map((f) => read(`_astro/${f}`)).join('\n');
+  assert.match(css, /unicode-range:[^;]*U\+1C90-1CBA/i);
+  for (const file of Object.values(pages)) assert.doesNotMatch(read(file), /�/, `${file} has replacement chars`);
 });

@@ -1,14 +1,23 @@
 @import '@fontsource-variable/noto-sans-georgian/wdth.css';
 
 :root {
-  /* Palette — taken from the logo */
-  --frost: #f4f7f9;      /* page background, the logo's cool white */
+  /* Palette — dark navy + bright blue, from the ChatGPT concept; blue also echoes the logo's snowflake */
+  --navy-950: #0b1420;
+  --navy-900: #111c29;
+  --navy-800: #1a2a3d;
+  --blue: #1e7bff;
+  --blue-600: #1766d6;
+  --blue-300: #7fb5ff;
+  --mist: #f3f6f9;
   --white: #ffffff;
-  --ink: #172231;        /* navy roof */
-  --steel: #556273;      /* secondary text */
-  --line: #d6dee5;
+  --ink: #152233;
+  --steel: #53606f;      /* secondary text */
+  --line: #dce3ea;
+  --frost: var(--mist);  /* legacy name */
+
+  /* Service colours — icons only */
   --fire: #e4531b;
-  --fire-ink: #b43d0c;   /* fire, dark enough for text */
+  --fire-ink: #b43d0c;
   --ice: #1d6bd0;
   --ice-ink: #1a5fb8;
   --water: #0f8283;
