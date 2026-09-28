@@ -12,6 +12,7 @@ const pages = {
   '/gagrileba/': 'gagrileba/index.html',
   '/tskalmomarageba/': 'tskalmomarageba/index.html',
   '/kontaqti/': 'kontaqti/index.html',
+  '/biznesi/': 'biznesi/index.html',
 };
 const servicePaths = ['/gatboba/', '/gagrileba/', '/tskalmomarageba/'];
 
@@ -96,3 +97,27 @@ test('sitemap lists all pages and not 404', () => {
 test('robots.txt points to the sitemap', () => {
   assert.match(read('robots.txt'), /^Sitemap: https:\/\/\S+\/sitemap-index\.xml$/m);
 });
+
+test('/biznesi/ has business Service, FAQPage and BreadcrumbList data', () => {
+  const html = read(pages['/biznesi/']);
+  const t = types(html);
+  for (const want of ['Service', 'FAQPage', 'BreadcrumbList']) assert.ok(t.includes(want), `${want} in ${t}`);
+  assert.match(html, /"BusinessAudience"/);
+});
+
+test('service calendar is readable without colour', () => {
+  const html = read(pages['/biznesi/']);
+  assert.match(html, /<table[^>]*class="[^"]*calendar/);
+  assert.match(html, /<caption/);
+  // every marked month carries a text label for screen readers
+  const marks = html.match(/class="mark[^"]*"/g) ?? [];
+  const labels = html.match(/<span class="visually-hidden">მომსახურება<\/span>/g) ?? [];
+  assert.ok(marks.length >= 20, `marks: ${marks.length}`);
+  assert.equal(labels.length, marks.length);
+});
+
+for (const path of ['/', '/gatboba/', '/gagrileba/', '/tskalmomarageba/']) {
+  test(`${path} links to the business page`, () => {
+    assert.match(read(pages[path]), /href="[^"]*\/biznesi\/"/);
+  });
+}
