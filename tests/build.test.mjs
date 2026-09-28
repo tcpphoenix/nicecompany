@@ -144,3 +144,25 @@ test('/chven-shesakheb/ is an About page with breadcrumbs', () => {
 test('header links to the About page', () => {
   assert.match(read(pages['/']), /href="[^"]*\/chven-shesakheb\/"/);
 });
+
+test('service card icon badge sits outside the clipped photo box', () => {
+  // A badge inside .media (overflow: hidden) is cut in half.
+  const html = read(pages['/']);
+  const media = html.match(/<div class="media"[^>]*>([\s\S]*?)<\/div>/);
+  assert.ok(media, 'service card media found');
+  assert.doesNotMatch(media[1], /class="badge"/);
+});
+
+test('hero photos stay light enough for phones', () => {
+  const imgs = readdirSync(new URL('_astro/', dist)).filter((f) => /^(hero|heating|cooling|water|business|band)\..*\.(webp|avif|jpe?g)$/.test(f));
+  assert.ok(imgs.length > 0, 'photo variants found');
+  for (const f of imgs) {
+    const size = readFileSync(new URL(`_astro/${f}`, dist)).length;
+    assert.ok(size <= 450_000, `${f} is ${size} bytes`);
+  }
+});
+
+test('section labels use one colour', () => {
+  const css = readdirSync(new URL('_astro/', dist)).filter((f) => f.endsWith('.css')).map((f) => read(`_astro/${f}`)).join('\n');
+  assert.match(css, /\.section-head \.label\{color:var\(--blue-600\)\}/);
+});

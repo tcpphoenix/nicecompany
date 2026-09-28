@@ -106,6 +106,7 @@ img, svg { display: block; max-width: 100%; }
 .section { padding-block: clamp(3rem, 2rem + 4vw, 5.5rem); }
 .section-head { display: grid; gap: 0.75rem; margin-bottom: clamp(2rem, 1rem + 3vw, 3.5rem); max-width: 44rem; }
 .section-head p { color: var(--steel); }
+.section-head .label { color: var(--blue-600); }
 
 .skip {
   position: absolute;
