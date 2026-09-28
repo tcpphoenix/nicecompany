@@ -1,20 +1,23 @@
 ---
 import Icon from './Icon.astro';
-import { site, telLink, whatsappLink, viberLink } from '../data/site';
+import { telLink, whatsappLink, viberLink, phoneLocal } from '../data/site';
 
 interface Props {
-  /** "light" for use on dark backgrounds. */
+  /** "light" for use on dark backgrounds and photos. */
   tone?: 'dark' | 'light';
+  /** Text on the main button; the number is shown under it. */
+  label?: string;
 }
-const { tone = 'dark' } = Astro.props;
+const { tone = 'dark', label = 'დაგვიკავშირდით' } = Astro.props;
 ---
 <div class:list={['contact', `contact--${tone}`]}>
   <a class="call" href={telLink()}>
-    <Icon name="phone" size={22} />
+    <Icon name="phone" size={20} />
     <span class="call-text">
-      <span class="call-label">დარეკეთ</span>
-      <span class="call-number">{site.phone}</span>
+      <span class="call-label">{label}</span>
+      <span class="call-number">{phoneLocal()}</span>
     </span>
+    <Icon name="arrow" size={18} class="call-arrow" />
   </a>
   <div class="chat">
     <a class="chat-btn chat-btn--wa" href={whatsappLink()} target="_blank" rel="noopener">
@@ -37,23 +40,26 @@ const { tone = 'dark' } = Astro.props;
     display: inline-flex;
     align-items: center;
     gap: 0.85rem;
-    padding: 0.8rem 1.4rem 0.8rem 1.1rem;
-    background: var(--ink);
+    padding: 0.75rem 1.25rem 0.75rem 1.1rem;
+    background: var(--blue);
     color: var(--white);
-    border-radius: 999px;
+    border-radius: 12px;
     text-decoration: none;
+    box-shadow: 0 10px 24px -12px rgb(30 123 255 / 0.8);
     transition: transform 0.15s ease, background 0.15s ease;
   }
-  .call:hover { background: #0d1520; transform: translateY(-1px); }
+  .call:hover { background: var(--blue-600); transform: translateY(-1px); }
+  .call :global(svg) { flex: none; }
   .call-text { display: grid; line-height: 1.25; }
-  .call-label { font-size: var(--step--1); opacity: 0.75; }
+  .call-label { font-weight: 800; font-size: 1rem; }
   .call-number {
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    font-size: 0.9rem;
+    opacity: 0.85;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
+  .call :global(.call-arrow) { margin-left: 0.25rem; transition: transform 0.2s ease; }
+  .call:hover :global(.call-arrow) { transform: translateX(3px); }
 
   .chat { display: flex; gap: 0.75rem; }
   .chat-btn {
@@ -63,18 +69,18 @@ const { tone = 'dark' } = Astro.props;
     padding: 0.75rem 1.1rem;
     border: 1.5px solid var(--line);
     background: var(--white);
-    border-radius: 999px;
-    font-weight: 600;
+    color: var(--ink);
+    border-radius: 12px;
+    font-weight: 700;
     text-decoration: none;
     transition: border-color 0.15s ease;
   }
+  .chat-btn :global(svg) { flex: none; }
   .chat-btn--wa :global(svg) { color: #1a9e4b; }
   .chat-btn--viber :global(svg) { color: #6f5ce0; }
   .chat-btn:hover { border-color: var(--ink); }
 
-  .contact--light .call { background: var(--white); color: var(--ink); }
-  .contact--light .call:hover { background: var(--frost); }
-  .contact--light .chat-btn { background: transparent; border-color: rgb(255 255 255 / 0.35); color: var(--white); }
+  .contact--light .chat-btn { background: rgb(255 255 255 / 0.06); border-color: rgb(255 255 255 / 0.4); color: var(--white); }
   .contact--light .chat-btn:hover { border-color: var(--white); }
   .contact--light .chat-btn--wa :global(svg) { color: #5fe08f; }
   .contact--light .chat-btn--viber :global(svg) { color: #b3a6ff; }

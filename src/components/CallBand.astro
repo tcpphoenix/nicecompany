@@ -1,13 +1,19 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import ContactButtons from './ContactButtons.astro';
+import bandPhoto from '../assets/photos/band.jpg';
 
 interface Props {
   title: string;
   text: string;
+  /** Background photo, darkened. Defaults to the pipes-and-valves photo. */
+  image?: ImageMetadata;
 }
-const { title, text } = Astro.props;
+const { title, text, image = bandPhoto } = Astro.props;
 ---
 <section class="band" aria-labelledby="call-band-title">
+  <Image class="bg" src={image} alt="" widths={[640, 1280, 1920]} sizes="100vw" loading="lazy" />
   <div class="wrap inner">
     <div class="copy">
       <h2 id="call-band-title">{title}</h2>
@@ -20,18 +26,26 @@ const { title, text } = Astro.props;
 <style>
   .band {
     position: relative;
+    isolation: isolate;
     overflow: hidden;
-    background: var(--ink);
+    background: var(--navy-950);
     color: var(--white);
-    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    padding-block: clamp(3.5rem, 2rem + 5vw, 6rem);
   }
-  /* The three currents, as a thin rule along the top edge. */
-  .band::before {
+  .bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .band::after {
     content: '';
     position: absolute;
-    inset: 0 0 auto 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--fire) 0 33.33%, var(--ice) 33.33% 66.66%, var(--water) 66.66%);
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgb(11 20 32 / 0.95) 0%, rgb(11 20 32 / 0.85) 55%, rgb(11 20 32 / 0.7) 100%);
   }
   .inner {
     display: flex;
@@ -41,5 +55,6 @@ const { title, text } = Astro.props;
     gap: 2rem;
   }
   .copy { display: grid; gap: 0.6rem; max-width: 34rem; }
-  p { color: rgb(255 255 255 / 0.75); }
+  h2 { color: var(--white); }
+  p { color: rgb(255 255 255 / 0.78); }
 </style>

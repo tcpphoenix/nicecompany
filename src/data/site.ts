@@ -341,6 +341,9 @@ export const business = {
 
 export const getService = (slug: string) => services.find((s) => s.slug === slug);
 
+/** Phone without the country code, as people in Georgia write it: 571 09 34 95. */
+export const phoneLocal = () => site.phone.replace(/^\+995\s*/, '');
+
 export const telLink = () => `tel:${site.phone.replace(/\s/g, '')}`;
 export const whatsappLink = () => `https://wa.me/${site.whatsapp.replace(/\D/g, '')}`;
 export const viberLink = () => `viber://chat?number=%2B${site.viber.replace(/\D/g, '')}`;

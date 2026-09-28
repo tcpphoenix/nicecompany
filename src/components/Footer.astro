@@ -19,6 +19,7 @@ const year = new Date().getFullYear();
           <li><a href={href(`/${s.slug}/`)}>{s.name}</a></li>
         ))}
         <li><a href={href('/biznesi/')}>ბიზნესისთვის</a></li>
+        <li><a href={href('/chven-shesakheb/')}>ჩვენ შესახებ</a></li>
         <li><a href={href('/kontaqti/')}>კონტაქტი</a></li>
       </ul>
     </nav>
@@ -40,7 +41,7 @@ const year = new Date().getFullYear();
 
 <style>
   .footer {
-    background: var(--ink);
+    background: var(--navy-950);
     color: rgb(255 255 255 / 0.82);
     padding-block: 3.5rem 2rem;
     font-size: 0.95rem;
