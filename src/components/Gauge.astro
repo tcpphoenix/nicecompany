@@ -77,7 +77,7 @@ const ticks = Array.from({ length: 19 }, (_, i) => {
 </div>
 
 <style>
-  .gauge { --needle: var(--rest); }
+  .gauge { --needle: var(--rest); container-type: inline-size; }
 
   /* Pointing at a segment or its label swings the needle there. */
   .gauge:has([data-seg='fire']:hover, [data-seg='fire']:focus-visible) { --needle: -60deg; }
@@ -124,7 +124,7 @@ const ticks = Array.from({ length: 19 }, (_, i) => {
 
   .legend {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.5rem;
     margin-top: 1.25rem;
   }
@@ -154,7 +154,9 @@ const ticks = Array.from({ length: 19 }, (_, i) => {
   .legend [data-seg='water'] :global(svg) { color: var(--water); }
   .legend-sum { font-size: var(--step--1); color: var(--steel); line-height: 1.45; }
 
-  @media (max-width: 559px) {
+  /* Stack the legend whenever the dial's own box is narrow, not only on phones:
+     "წყალმომარაგება" is one long word that can't share a third of a narrow box. */
+  @container (max-width: 420px) {
     .legend { grid-template-columns: 1fr; gap: 0.25rem; }
     .legend a { border-color: var(--line); }
   }

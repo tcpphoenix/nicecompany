@@ -121,3 +121,9 @@ for (const path of ['/', '/gatboba/', '/gagrileba/', '/tskalmomarageba/']) {
     assert.match(read(pages[path]), /href="[^"]*\/biznesi\/"/);
   });
 }
+
+test('emergency call-outs are not promised outside working hours', () => {
+  const html = read(pages['/biznesi/']);
+  assert.doesNotMatch(html, /ნებისმიერ დროს/);
+  assert.match(html, /ავარიული გამოძახება[\s\S]{0,400}10:00–18:00/);
+});

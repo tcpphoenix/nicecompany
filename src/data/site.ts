@@ -264,7 +264,7 @@ export const business = {
     { accent: 'fire', label: 'გათბობა', note: 'შემოწმება გათბობის სეზონამდე', months: [8, 9] },
     { accent: 'ice', label: 'გაგრილება', note: 'წმენდა და შემოწმება ზაფხულამდე', months: [3, 4] },
     { accent: 'water', label: 'წყალმომარაგება', note: 'შემოწმება ყოველ კვარტალში', months: [2, 5, 8, 11] },
-    { accent: 'ink', label: 'ავარიული გამოძახება', note: 'პრიორიტეტულად, წლის ნებისმიერ დროს', months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
+    { accent: 'ink', label: 'ავარიული გამოძახება', note: `პრიორიტეტულად, ${site.hours.days} ${site.hours.time}`, months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
   ] as { accent: Accent | 'ink'; label: string; note: string; months: number[] }[],
   equipment: [
     { accent: 'fire', name: 'საქვაბეები' },

@@ -101,6 +101,8 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
     gap: clamp(2rem, 1rem + 4vw, 5rem);
     align-items: center;
   }
+  /* Grid items may shrink below their content width; the dial legend adapts to its box. */
+  .hero-grid > * { min-width: 0; }
   .hero-copy { display: grid; gap: 1.25rem; justify-items: start; }
   .hero-copy h1 { max-width: 13em; }
   .lead { font-size: var(--step-1); color: var(--steel); max-width: 30rem; line-height: 1.6; margin-bottom: 0.5rem; }
