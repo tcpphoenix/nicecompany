@@ -4,3 +4,7 @@ dist/
 .DS_Store
 private/
 .superpowers/
+
+# Saved reference pages (third-party content, keep out of the public repo)
+ვებგვერდის შექმნა.html
+ვებგვერდის შექმნა_files/
