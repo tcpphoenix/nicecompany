@@ -1,8 +1,9 @@
 ---
+import { mtavruli } from '../lib/mtavruli';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import Districts from '../components/Districts.astro';
-import { site, telLink, whatsappLink, viberLink } from '../data/site';
+import { site, telLink, whatsappLink, viberLink, phoneLocal } from '../data/site';
 import { businessSchema, breadcrumbSchema } from '../lib/schema';
 
 const root = new URL(import.meta.env.BASE_URL, Astro.site);
@@ -17,7 +18,7 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
   <section class="section contact">
     <div class="wrap">
       <div class="section-head">
-        <p class="label">კონტაქტი</p>
+        <p class="label">{mtavruli('კონტაქტი')}</p>
         <h1>დაგვირეკეთ ან მოგვწერეთ</h1>
         <p>გვითხარით, რა პრობლემაა და რომელ რაიონში ხართ — შევთანხმდებით ვიზიტის დროზე.</p>
       </div>
@@ -27,7 +28,7 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
           <a class="channel channel--call" href={telLink()}>
             <Icon name="phone" size={28} />
             <span class="c-label">დარეკეთ</span>
-            <span class="c-value">{site.phone}</span>
+            <span class="c-value">{phoneLocal()}</span>
           </a>
         </li>
         <li>
@@ -48,16 +49,16 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
 
       <dl class="facts">
         <div>
-          <dt class="label">სამუშაო საათები</dt>
+          <dt class="label">{mtavruli('სამუშაო საათები')}</dt>
           <dd>{site.hours.days && `${site.hours.days}, `}{site.hours.time}</dd>
         </div>
         <div>
-          <dt class="label">გარანტია</dt>
+          <dt class="label">{mtavruli('გარანტია')}</dt>
           <dd>ერთი თვე შესრულებულ სამუშაოზე</dd>
         </div>
         {site.facebook && (
           <div>
-            <dt class="label">Facebook</dt>
+            <dt class="label">{mtavruli('Facebook')}</dt>
             <dd><a href={site.facebook} target="_blank" rel="noopener">ჩვენი გვერდი</a></dd>
           </div>
         )}
@@ -96,7 +97,7 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
   .channel :global(.vb) { color: #6f5ce0; }
   .c-label { color: var(--steel); font-size: 0.95rem; }
   .c-value { font-size: var(--step-2); font-weight: 800; font-stretch: 85%; font-variant-numeric: tabular-nums; }
-  .channel--call { background: var(--ink); border-color: var(--ink); color: var(--white); }
+  .channel--call { background: var(--blue); border-color: var(--blue); color: var(--white); }
   .channel--call .c-label { color: rgb(255 255 255 / 0.7); }
 
   .facts {
