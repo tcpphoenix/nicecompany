@@ -1,9 +1,14 @@
 ---
 // A real sequence, so it is numbered.
 import { steps } from '../data/site';
+
+interface Props {
+  items?: { title: string; text: string }[];
+}
+const { items = steps } = Astro.props;
 ---
-<ol class="steps">
-  {steps.map((s, i) => (
+<ol class="steps" style={`--n: ${items.length}`}>
+  {items.map((s, i) => (
     <li>
       <span class="num" aria-hidden="true">{i + 1}</span>
       <h3>{s.title}</h3>
@@ -15,9 +20,8 @@ import { steps } from '../data/site';
 <style>
   .steps {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(var(--n), 1fr);
     gap: 2rem;
-    counter-reset: step;
   }
   li { position: relative; display: grid; gap: 0.5rem; align-content: start; }
   /* Pipe connecting the steps */

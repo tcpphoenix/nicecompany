@@ -1,5 +1,5 @@
 // JSON-LD builders. Google reads these to understand the business and pages.
-import { site, type Faq, type Service } from '../data/site';
+import { site, business, type Faq, type Service } from '../data/site';
 
 const abs = (siteUrl: URL, path: string) => new URL(path.replace(/^\//, ''), siteUrl).href;
 
@@ -68,5 +68,18 @@ export function breadcrumbSchema(siteUrl: URL, crumbs: { name: string; path: str
       name: c.name,
       item: abs(siteUrl, c.path),
     })),
+  };
+}
+
+export function businessServiceSchema(siteUrl: URL) {
+  return {
+    '@type': 'Service',
+    name: business.h1,
+    serviceType: 'გათბობის, გაგრილების და წყლის სისტემების მომსახურება',
+    description: business.description,
+    url: abs(siteUrl, '/biznesi/'),
+    provider: { '@id': abs(siteUrl, '/#business') },
+    areaServed: { '@type': 'City', name: 'თბილისი' },
+    audience: { '@type': 'BusinessAudience', name: business.sectors.map((s) => s.name).join(', ') },
   };
 }

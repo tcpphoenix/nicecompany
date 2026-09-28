@@ -1,0 +1,245 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ContactButtons from '../components/ContactButtons.astro';
+import ServiceCalendar from '../components/ServiceCalendar.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import Districts from '../components/Districts.astro';
+import CallBand from '../components/CallBand.astro';
+import { business } from '../data/site';
+import { href } from '../lib/href';
+import { businessSchema, businessServiceSchema, faqSchema, breadcrumbSchema } from '../lib/schema';
+
+const root = new URL(import.meta.env.BASE_URL, Astro.site);
+---
+<Base
+  title={business.title}
+  description={business.description}
+  path="/biznesi/"
+  current="biznesi"
+  schema={[
+    businessSchema(root),
+    businessServiceSchema(root),
+    faqSchema(business.faq),
+    breadcrumbSchema(root, [
+      { name: 'მთავარი', path: '/' },
+      { name: 'ბიზნესისთვის', path: '/biznesi/' },
+    ]),
+  ]}
+>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <nav aria-label="ნავიგაციის ბილიკი" class="crumbs">
+          <a href={href('/')}>მთავარი</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">ბიზნესისთვის</span>
+        </nav>
+        <p class="label">ბიზნესისთვის</p>
+        <h1>{business.h1}</h1>
+        <p class="lead">{business.intro}</p>
+        <ContactButtons />
+      </div>
+      <aside class="hero-panel" aria-label="ვის ვემსახურებით">
+        <p class="panel-title">ვემსახურებით</p>
+        <ul>
+          {business.sectors.map((s) => <li>{s.name}</li>)}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="offers-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">თანამშრომლობა</p>
+        <h2 id="offers-title">ორი გზა — აირჩიეთ, რომელიც გაწყობთ</h2>
+      </div>
+      <div class="offers">
+        {business.offers.map((o) => (
+          <article class:list={['offer', { 'offer--featured': o.featured }]}>
+            <h3>{o.title}</h3>
+            <p class="offer-lead">{o.lead}</p>
+            <ul>
+              {o.points.map((pt) => <li><Icon name="check" size={18} /> {pt}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section tinted" aria-labelledby="calendar-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">მომსახურების გრაფიკი</p>
+        <h2 id="calendar-title">წელიწადი ხელშეკრულებით</h2>
+        <p>ყველა სისტემას თავის დროზე ვამოწმებთ — სეზონამდე, და არა მაშინ, როცა უკვე გაფუჭდა.</p>
+      </div>
+      <ServiceCalendar />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="equipment-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">დანადგარები</p>
+        <h2 id="equipment-title">რას ვემსახურებით</h2>
+      </div>
+      <ul class="equipment">
+        {business.equipment.map((e) => (
+          <li data-accent={e.accent}><Icon name={e.accent} size={18} /> {e.name}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section tinted" aria-labelledby="sectors-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">ვისთვის</p>
+        <h2 id="sectors-title">თქვენი ბიზნესის სისტემები</h2>
+      </div>
+      <ul class="sectors">
+        {business.sectors.map((s) => (
+          <li>
+            <h3>{s.name}</h3>
+            <p class="systems">{s.systems}</p>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="contract-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">როგორ ვიწყებთ</p>
+        <h2 id="contract-title">ხელშეკრულება ოთხ ნაბიჯში</h2>
+      </div>
+      <Steps items={business.contractSteps} />
+    </div>
+  </section>
+
+  <section class="section tinted" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">კითხვები</p>
+        <h2 id="faq-title">ხშირად დასმული კითხვები</h2>
+      </div>
+      <Faq items={business.faq} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <Districts />
+    </div>
+  </section>
+
+  <CallBand
+    title="მოითხოვეთ ობიექტის დათვალიერება"
+    text="დაგვირეკეთ ან მოგვწერეთ — შევთანხმდებით ვიზიტზე და შევამოწმებთ თქვენს სისტემებს."
+  />
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(1.5rem, 1rem + 3vw, 4rem) clamp(2.5rem, 1rem + 5vw, 5rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: center;
+  }
+  .hero-copy { display: grid; gap: 1.1rem; justify-items: start; }
+  .crumbs { display: flex; gap: 0.5rem; font-size: var(--step--1); color: var(--steel); }
+  .crumbs a { color: var(--steel); }
+  .lead { font-size: var(--step-1); color: var(--steel); max-width: 36rem; line-height: 1.6; margin-bottom: 0.5rem; }
+
+  .hero-panel {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 24px;
+    padding: 1.75rem 1.75rem 1.5rem;
+  }
+  /* The three currents along the panel's top edge. */
+  .hero-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--fire) 0 33.33%, var(--ice) 33.33% 66.66%, var(--water) 66.66%);
+  }
+  .panel-title { font-weight: 700; color: rgb(255 255 255 / 0.6); font-size: 0.9rem; margin-bottom: 0.75rem; }
+  .hero-panel ul { display: grid; }
+  .hero-panel li {
+    padding: 0.6rem 0;
+    font-weight: 700;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+  }
+
+  .offers { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1rem; }
+  .offer {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+  .offer h3 { font-size: var(--step-2); font-stretch: 80%; font-weight: 800; }
+  .offer-lead { color: var(--steel); }
+  .offer ul { display: grid; gap: 0.5rem; margin-top: 0.5rem; }
+  .offer li { display: flex; gap: 0.6rem; align-items: baseline; font-weight: 600; }
+  .offer li :global(svg) { flex: none; transform: translateY(3px); color: var(--water-ink); }
+  .offer--featured { background: var(--ink); border-color: var(--ink); color: var(--white); }
+  .offer--featured .offer-lead { color: rgb(255 255 255 / 0.72); }
+  .offer--featured li :global(svg) { color: #5fd3d3; }
+
+  .tinted { background: var(--white); border-block: 1px solid var(--line); }
+
+  .equipment { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .equipment li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.1rem 0.6rem 0.85rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .equipment li :global(svg) { flex: none; color: var(--accent); }
+
+  .sectors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .sectors li {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--ink);
+    border-radius: var(--radius);
+    background: var(--frost);
+  }
+  .sectors .systems { font-size: 0.9rem; font-weight: 600; color: var(--water-ink); line-height: 1.5; }
+  .sectors p:last-child { color: var(--steel); }
+
+  @media (max-width: 1023px) {
+    .sectors { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 899px) {
+    .hero-grid, .offers { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 599px) {
+    .sectors { grid-template-columns: 1fr; }
+  }
+</style>

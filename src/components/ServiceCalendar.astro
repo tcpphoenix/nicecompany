@@ -1,0 +1,138 @@
+---
+// The business page's signature: a year of planned service, one row per system.
+// A real table so the schedule reads without colour and in screen readers.
+import { business, monthsShort } from '../data/site';
+
+const rows = business.calendar.map((row) => {
+  const on = new Set(row.months);
+  return {
+    ...row,
+    cells: monthsShort.map((_, m) => ({
+      on: on.has(m),
+      joinLeft: on.has(m) && on.has(m - 1),
+      joinRight: on.has(m) && on.has(m + 1),
+    })),
+  };
+});
+---
+<div class="cal-wrap">
+  <table class="calendar">
+    <caption class="visually-hidden">წლიური მომსახურების გრაფიკი: რომელ თვეებში ვემსახურებით თითოეულ სისტემას</caption>
+    <thead>
+      <tr>
+        <td class="corner"></td>
+        {monthsShort.map((m, i) => <th scope="col" data-m={i}>{m}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr data-accent={row.accent}>
+          <th scope="row">
+            <span class="row-label">{row.label}</span>
+            <span class="row-note">{row.note}</span>
+          </th>
+          {row.cells.map((c, i) => (
+            <td data-m={i}>
+              {c.on && (
+                <span class:list={['mark', `mark--${row.accent}`, { 'join-l': c.joinLeft, 'join-r': c.joinRight }]}>
+                  <span class="visually-hidden">მომსახურება</span>
+                </span>
+              )}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<script is:inline>
+  // Highlight the current month; the table is complete without this.
+  (() => {
+    const m = new Date().getMonth();
+    document.querySelectorAll('.calendar [data-m="' + m + '"]').forEach((el) => el.classList.add('now'));
+  })();
+</script>
+
+<style>
+  .cal-wrap {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: clamp(1rem, 0.5rem + 2vw, 2rem);
+  }
+  .calendar {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .corner { width: 14rem; }
+  thead th {
+    padding: 0 0 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--steel);
+    text-align: center;
+  }
+  thead th.now { color: var(--ink); }
+  thead th.now::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 5px;
+    margin: 0.25rem auto 0;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  tbody tr + tr > * { border-top: 1px solid var(--line); }
+  tbody th {
+    display: grid;
+    padding: 0.85rem 1rem 0.85rem 0;
+    text-align: left;
+    font-weight: 400;
+    line-height: 1.35;
+  }
+  .row-label { font-weight: 800; font-stretch: 85%; font-size: 1.05rem; }
+  .row-note { font-size: 0.85rem; color: var(--steel); }
+  tbody td { padding: 0; vertical-align: middle; }
+  tbody td.now { background: var(--frost); }
+
+  .mark {
+    display: block;
+    height: 14px;
+    margin-inline: 4px;
+    border-radius: 999px;
+  }
+  .mark.join-l { margin-left: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+  .mark.join-r { margin-right: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+  .mark--fire { background: var(--fire); }
+  .mark--ice { background: var(--ice); }
+  .mark--water { background: var(--water); }
+  /* Emergency call-outs: always available, drawn as a hatched rail. */
+  .mark--ink {
+    height: 10px;
+    background: repeating-linear-gradient(135deg, var(--ink) 0 6px, #3a4658 6px 10px);
+  }
+  tr[data-accent='fire'] .row-label { color: var(--fire-ink); }
+  tr[data-accent='ice'] .row-label { color: var(--ice-ink); }
+  tr[data-accent='water'] .row-label { color: var(--water-ink); }
+
+  /* Phones: each system's label sits above its own 12-month track. */
+  @media (max-width: 640px) {
+    .calendar, .calendar tbody, .calendar thead { display: block; }
+    .calendar tr {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      align-items: center;
+    }
+    .corner { display: none; }
+    thead th { font-size: 0.62rem; padding-bottom: 0.4rem; }
+    tbody th { grid-column: 1 / -1; padding: 0.8rem 0 0.4rem; }
+    tbody tr + tr > * { border-top: 0; }
+    tbody tr + tr { border-top: 1px solid var(--line); }
+    tbody td { height: 1.5rem; display: flex; align-items: center; }
+    tbody td .mark { width: 100%; }
+    .mark { margin-inline: 2px; height: 12px; }
+  }
+</style>

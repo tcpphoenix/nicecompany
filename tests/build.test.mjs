@@ -111,7 +111,7 @@ test('service calendar is readable without colour', () => {
   assert.match(html, /<caption/);
   // every marked month carries a text label for screen readers
   const marks = html.match(/class="mark[^"]*"/g) ?? [];
-  const labels = html.match(/<span class="visually-hidden">მომსახურება<\/span>/g) ?? [];
+  const labels = html.match(/<span class="visually-hidden"[^>]*>მომსახურება<\/span>/g) ?? [];
   assert.ok(marks.length >= 20, `marks: ${marks.length}`);
   assert.equal(labels.length, marks.length);
 });
