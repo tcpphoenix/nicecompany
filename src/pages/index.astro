@@ -33,7 +33,7 @@ const sectorChips = [
 >
   <PhotoHero image={photos.hero} alt="გათბობის სისტემის მილები და მანომეტრები" eyebrow="სახლებისა და ბიზნესისთვის" size="tall" focus="75% 50%">
     <h1 class="home-h1">
-      <span class="h-big">სრული სერვისი</span>
+      <span class="h-big">სრული სერვისი</span>{' '}
       <span class="h-blue">გათბობა • გაგრილება • წყალმომარაგება</span>
     </h1>
     <p class="lead">პროექტირება, მონტაჟი და მომსახურება — ბინებიდან და სახლებიდან სასტუმროებამდე, ოფისებამდე და საწარმოებამდე.</p>
@@ -236,6 +236,7 @@ const sectorChips = [
     .tiles, .checks { grid-template-columns: 1fr; }
     .hero-icons { grid-template-columns: 1fr; gap: 0; }
     .hero-icons li { padding: 0.75rem 0; border-top: 1px solid rgb(255 255 255 / 0.12); }
-    .hero-actions .btn { width: 100%; }
+    .hero-actions .btn, .biz-actions .btn-primary { width: 100%; }
+    .biz-actions .btn-ghost { display: none; }
   }
 </style>

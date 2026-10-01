@@ -159,3 +159,19 @@ test('section labels use one colour', () => {
   const css = readdirSync(new URL('_astro/', dist)).filter((f) => f.endsWith('.css')).map((f) => read(`_astro/${f}`)).join('\n');
   assert.match(css, /\.section-head \.label\{color:var\(--blue-600\)\}/);
 });
+
+test('home H1 reads as separate words', () => {
+  const h1 = read(pages['/']).match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1].replace(/<[^>]+>/g, '');
+  assert.match(h1, /სერვისი\s+გათბობა/);
+});
+
+test('phone menu panel scrolls when taller than the screen', () => {
+  const css = readdirSync(new URL('_astro/', dist)).filter((f) => f.endsWith('.css')).map((f) => read(`_astro/${f}`)).join('\n');
+  assert.match(css, /\.panel\[data-astro-cid-[^\]]+\]\{[^}]*overflow-y:auto/);
+});
+
+test('other-services row has no lonely card (3 per row)', () => {
+  // Small page styles may be inlined into the HTML, so search both.
+  const css = readdirSync(new URL('_astro/', dist)).filter((f) => f.endsWith('.css')).map((f) => read(`_astro/${f}`)).join('\n') + read(pages['/gatboba/']);
+  assert.match(css, /\.others-list\[data-astro-cid-[^\]]+\]\{[^}]*grid-template-columns:repeat\(3,1fr\)/);
+});

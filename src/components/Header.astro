@@ -22,7 +22,7 @@ const isCurrent = (key: string) => key === current || (key === 'services' && isS
 <header class="header">
   <div class="wrap bar">
     <a class="brand" href={href('/')} aria-label={`${site.name} — მთავარი გვერდი`}>
-      <Logo tagline />
+      <Logo tagline id="logo-h" />
     </a>
 
     <nav class="nav" aria-label="მთავარი მენიუ">
@@ -81,6 +81,13 @@ const isCurrent = (key: string) => key === current || (key === 'services' && isS
     const open = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', String(!open));
     if (panel) panel.hidden = open;
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') {
+      btn.setAttribute('aria-expanded', 'false');
+      if (panel) panel.hidden = true;
+      btn.focus();
+    }
   });
   panel?.addEventListener('click', (e) => {
     if ((e.target as HTMLElement).closest('a')) {
@@ -184,8 +191,15 @@ const isCurrent = (key: string) => key === current || (key === 'services' && isS
   .menu-btn[aria-expanded='true'] :global(.i-open) { display: none; }
   .menu-btn[aria-expanded='true'] :global(.i-close) { display: block; }
 
-  .panel { border-top: 1px solid var(--line); background: var(--white); }
-  .panel nav { padding-block: 0.75rem 1.25rem; }
+  /* The open menu scrolls on its own when it is taller than the screen (phones held sideways). */
+  .panel {
+    max-height: calc(100dvh - 4.25rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-top: 1px solid var(--line);
+    background: var(--white);
+  }
+  .panel nav { padding-block: 0.75rem 6rem; }
   .panel a {
     display: block;
     padding: 0.7rem 0;

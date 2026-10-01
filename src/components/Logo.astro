@@ -7,9 +7,10 @@ interface Props {
   tone?: 'light' | 'dark';
   /** Show the two-line tagline next to the wordmark (desktop header). */
   tagline?: boolean;
+  /** Unique per page instance (gradient id). */
+  id?: string;
 }
-const { tone = 'light', tagline = false } = Astro.props;
-const id = `n${Math.random().toString(36).slice(2, 7)}`;
+const { tone = 'light', tagline = false, id = 'logo' } = Astro.props;
 ---
 <span class:list={['logo', `logo--${tone}`]}>
   <svg class="mark" viewBox="0 0 64 48" aria-hidden="true" focusable="false">
