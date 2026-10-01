@@ -21,6 +21,14 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
 - [ ] **Contract promises.** Page promises: scheduled visits, seasonal preparation, priority call-outs, a record of all work done. Confirm he can deliver all four.
 - [ ] **Business references.** Any hotels / restaurants / offices he already serves (with permission) — strongest proof for business clients.
 
+## Koba's design (ChatGPT image, "ვებგვერდის შექმნა.html") — decide before matching it
+
+The live site follows the direction of Koba's design but not its exact layout. Before rebuilding to match it:
+- [ ] **Logo:** new "NISE COMPANY" (blue N) from his design, or keep the original round logo? (No file for the new one — would need redrawing.)
+- [ ] **Numbers strip:** his design says "17 technicians", "100% satisfied", "all of Georgia" — invented by ChatGPT. Get real numbers, or show true facts instead (1-month warranty, all Tbilisi districts, Mon–Sat 10:00–18:00).
+- [ ] **Dial:** his design has none — remove it?
+- [ ] Then: 5 service cards (boilers, ACs, fan coils, pumps, water supply), "რატომ ნისე კომპანია?" block with technician photo, "თქვენი კომფორტი" block, bottom contact bar — with matching free photos.
+
 ## Domain: `nisecompany.ge`
 
 - [ ] Register `nisecompany.ge` **in Koba's name** (~30–60 ₾/year).
