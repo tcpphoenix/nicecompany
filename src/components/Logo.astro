@@ -1,0 +1,55 @@
+---
+// Logo from the Claude Design version: a slanted blue "N" + ნისე კომპანი in Georgian capitals.
+import { mtavruli } from '../lib/mtavruli';
+
+interface Props {
+  /** "dark" for navy backgrounds. */
+  tone?: 'light' | 'dark';
+  /** Show the two-line tagline next to the wordmark (desktop header). */
+  tagline?: boolean;
+}
+const { tone = 'light', tagline = false } = Astro.props;
+const id = `n${Math.random().toString(36).slice(2, 7)}`;
+---
+<span class:list={['logo', `logo--${tone}`]}>
+  <svg class="mark" viewBox="0 0 64 48" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id={`${id}-d`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#1459bf" />
+        <stop offset="1" stop-color="#5aaeff" />
+      </linearGradient>
+    </defs>
+    <path d="M2 46 L13 46 L23 2 L12 2 Z" fill="#0f4fb8" />
+    <path d="M12 2 L23 2 L51 46 L40 46 Z" fill={`url(#${id}-d)`} />
+    <path d="M40 46 L51 46 L61 2 L50 2 Z" fill="#6cc0ff" />
+  </svg>
+  <span class="word">
+    <span class="w1">{mtavruli('ნისე')}</span>
+    <span class="w2">{mtavruli('კომპანი')}</span>
+  </span>
+  {tagline && (
+    <span class="tag">
+      <span>საინჟინრო სისტემები</span>
+      <span>სახლებისა და ბიზნესისთვის</span>
+    </span>
+  )}
+</span>
+
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--navy-900); }
+  .mark { width: 2.9rem; height: auto; flex: none; }
+  .word { display: grid; line-height: 1; }
+  .w1 { font-weight: 800; font-size: 1.55rem; letter-spacing: 0.06em; }
+  .w2 { font-weight: 700; font-size: 0.6rem; letter-spacing: 0.42em; margin-top: 0.2rem; }
+  .tag {
+    display: grid;
+    margin-left: 0.6rem;
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--line);
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: var(--steel);
+  }
+  .logo--dark { color: var(--white); }
+  .logo--dark .tag { color: rgb(255 255 255 / 0.65); border-color: rgb(255 255 255 / 0.2); }
+</style>

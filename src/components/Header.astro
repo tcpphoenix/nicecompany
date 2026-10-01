@@ -1,6 +1,5 @@
 ---
-import { Image } from 'astro:assets';
-import emblem from '../assets/emblem.png';
+import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import { href } from '../lib/href';
 import { services, site, telLink, whatsappLink, phoneLocal } from '../data/site';
@@ -11,33 +10,26 @@ interface Props {
 const { current } = Astro.props;
 const isService = services.some((s) => s.slug === current);
 
-// Desktop shows a short menu; phones get a chip row that also lists each service.
-const items = [
-  { label: 'მთავარი', path: '/', key: 'home', where: 'desktop' },
-  { label: 'ჩვენ შესახებ', path: '/chven-shesakheb/', key: 'about', where: 'both' },
-  { label: 'სერვისები', path: '/#services', key: 'services', where: 'desktop' },
-  ...services.map((s) => ({ label: s.name, path: `/${s.slug}/`, key: s.slug, accent: s.accent, where: 'mobile' })),
-  { label: 'ბიზნესისთვის', path: '/biznesi/', key: 'biznesi', where: 'both' },
-  { label: 'კონტაქტი', path: '/kontaqti/', key: 'kontaqti', where: 'both' },
-] as { label: string; path: string; key: string; accent?: 'fire' | 'ice' | 'water'; where: string }[];
-
+const main = [
+  { label: 'მთავარი', path: '/', key: 'home' },
+  { label: 'ჩვენ შესახებ', path: '/chven-shesakheb/', key: 'about' },
+  { label: 'სერვისები', path: '/#services', key: 'services' },
+  { label: 'ბიზნესისთვის', path: '/biznesi/', key: 'biznesi' },
+  { label: 'კონტაქტი', path: '/kontaqti/', key: 'kontaqti' },
+];
 const isCurrent = (key: string) => key === current || (key === 'services' && isService);
 ---
 <header class="header">
   <div class="wrap bar">
     <a class="brand" href={href('/')} aria-label={`${site.name} — მთავარი გვერდი`}>
-      <Image src={emblem} alt="" width={52} height={38} densities={[1, 2, 3]} loading="eager" />
-      <span class="wordmark"><span>ნისე</span><span class="wordmark-b">კომპანი</span></span>
+      <Logo tagline />
     </a>
 
     <nav class="nav" aria-label="მთავარი მენიუ">
       <ul>
-        {items.map((it) => (
-          <li class={`only-${it.where}`}>
-            <a href={href(it.path)} aria-current={isCurrent(it.key) ? 'page' : undefined}>
-              {it.accent && <Icon name={it.accent} size={15} class={`ic ic--${it.accent}`} />}
-              {it.label}
-            </a>
+        {main.map((it) => (
+          <li>
+            <a href={href(it.path)} aria-current={isCurrent(it.key) ? 'page' : undefined}>{it.label}</a>
           </li>
         ))}
       </ul>
@@ -52,8 +44,51 @@ const isCurrent = (key: string) => key === current || (key === 'services' && isS
         მოგვწერეთ WhatsApp-ით <Icon name="whatsapp" size={15} />
       </a>
     </div>
+
+    <div class="compact">
+      <a class="round-call" href={telLink()} aria-label={`დარეკვა: ${phoneLocal()}`}>
+        <Icon name="phone" size={20} />
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="მენიუ">
+        <Icon name="menu" size={22} class="i-open" />
+        <Icon name="close" size={22} class="i-close" />
+      </button>
+    </div>
+  </div>
+
+  <div class="panel" id="site-menu" hidden>
+    <nav class="wrap" aria-label="მენიუ">
+      <ul class="panel-main">
+        {main.map((it) => (
+          <li><a href={href(it.path)} aria-current={isCurrent(it.key) ? 'page' : undefined}>{it.label}</a></li>
+        ))}
+      </ul>
+      <p class="panel-label">სერვისები</p>
+      <ul class="panel-services">
+        {services.map((s) => (
+          <li><a href={href(`/${s.slug}/`)} aria-current={current === s.slug ? 'page' : undefined}>{s.name}</a></li>
+        ))}
+      </ul>
+    </nav>
   </div>
 </header>
+
+<script>
+  // Compact-header menu toggle; without JS the menu stays hidden and the bottom bar still offers calling.
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const panel = document.getElementById('site-menu');
+  btn?.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    if (panel) panel.hidden = open;
+  });
+  panel?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) {
+      btn?.setAttribute('aria-expanded', 'false');
+      panel.hidden = true;
+    }
+  });
+</script>
 
 <style>
   .header {
@@ -66,38 +101,18 @@ const isCurrent = (key: string) => key === current || (key === 'services' && isS
   }
   /* The header runs a little wider than the content so the full menu fits in one row. */
   .bar {
-    max-width: 80rem;
+    max-width: 82rem;
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    min-height: 4.75rem;
+    min-height: 5rem;
   }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-    margin-right: auto;
-    flex: none;
-  }
-  .brand img { width: 52px; height: auto; }
-  .wordmark {
-    font-weight: 800;
-    font-stretch: 80%;
-    font-size: 1.4rem;
-    letter-spacing: 0.02em;
-    line-height: 1;
-    color: var(--navy-900);
-  }
-  .wordmark-b { color: var(--blue-600); }
+  .brand { display: flex; text-decoration: none; margin-right: auto; flex: none; }
 
   .nav ul { display: flex; gap: 0.25rem; }
-  .only-mobile { display: none; }
   .nav a {
     position: relative;
     display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
     padding: 0.5rem 0.7rem;
     font-weight: 700;
     font-size: 0.95rem;
@@ -106,24 +121,19 @@ const isCurrent = (key: string) => key === current || (key === 'services' && isS
     white-space: nowrap;
   }
   .nav a:hover { color: var(--blue-600); }
-  /* Blue underline under the current page, as in the concept. */
   .nav a[aria-current='page'] { color: var(--blue-600); }
   .nav a[aria-current='page']::after {
     content: '';
     position: absolute;
     left: 0.7rem;
     right: 0.7rem;
-    bottom: 0.1rem;
+    bottom: 0.05rem;
     height: 2px;
     border-radius: 2px;
     background: var(--blue);
   }
-  .nav :global(.ic) { flex: none; }
-  .nav :global(.ic--fire) { color: var(--fire); }
-  .nav :global(.ic--ice) { color: var(--ice); }
-  .nav :global(.ic--water) { color: var(--water); }
 
-  .reach { display: grid; justify-items: end; gap: 0.1rem; flex: none; }
+  .reach { display: grid; justify-items: start; gap: 0.1rem; flex: none; }
   .phone {
     display: inline-flex;
     align-items: center;
@@ -135,12 +145,13 @@ const isCurrent = (key: string) => key === current || (key === 'services' && isS
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
-  .phone :global(svg) { flex: none; color: var(--blue-600); }
+  .phone :global(svg) { flex: none; color: var(--navy-900); }
   .wa {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    font-size: 0.8rem;
+    margin-left: 1.75rem;
+    font-size: 0.78rem;
     font-weight: 600;
     color: var(--steel);
     text-decoration: none;
@@ -148,35 +159,63 @@ const isCurrent = (key: string) => key === current || (key === 'services' && isS
   .wa :global(svg) { flex: none; color: #1a9e4b; }
   .wa:hover { color: var(--ink); }
 
-  /* Below 1280px the menu moves to its own scrollable row under the logo. */
-  @media (max-width: 1279px) {
-    .bar { flex-wrap: wrap; gap: 0; min-height: 3.5rem; }
-    .brand { padding-block: 0.55rem; }
-    .only-desktop { display: none; }
-    .only-mobile { display: list-item; }
-    .nav {
-      order: 3;
-      width: calc(100% + 2 * var(--gutter));
-      margin-inline: calc(-1 * var(--gutter));
-      padding: 0 var(--gutter) 0.6rem;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .nav ul { width: max-content; gap: 0.35rem; }
-    .nav a {
-      font-size: 0.9rem;
-      padding: 0.35rem 0.75rem;
-      background: var(--mist);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-    }
-    .nav a[aria-current='page'] { background: var(--navy-900); border-color: var(--navy-900); color: var(--white); }
-    .nav a[aria-current='page']::after { display: none; }
+  .compact { display: none; align-items: center; gap: 0.6rem; }
+  .round-call {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--blue);
+    color: var(--white);
   }
-  /* On phones the bottom bar handles calling. */
+  .menu-btn {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .menu-btn :global(.i-close) { display: none; }
+  .menu-btn[aria-expanded='true'] :global(.i-open) { display: none; }
+  .menu-btn[aria-expanded='true'] :global(.i-close) { display: block; }
+
+  .panel { border-top: 1px solid var(--line); background: var(--white); }
+  .panel nav { padding-block: 0.75rem 1.25rem; }
+  .panel a {
+    display: block;
+    padding: 0.7rem 0;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .panel a[aria-current='page'] { color: var(--blue-600); }
+  .panel-label { margin-top: 1rem; font-size: 0.85rem; font-weight: 700; color: var(--steel); }
+  .panel-services a { font-weight: 600; padding-left: 0.75rem; }
+
+  /* Below 1280px the full menu folds into the menu button. */
+  @media (max-width: 1279px) {
+    .nav { display: none; }
+    .compact { display: flex; }
+    .bar { min-height: 4.25rem; }
+  }
+  @media (min-width: 1280px) {
+    .panel { display: none; }
+  }
+  /* Tablets show the number itself, so the round call button is only for phones. */
+  @media (min-width: 900px) {
+    .round-call { display: none; }
+  }
   @media (max-width: 899px) {
     .reach { display: none; }
-    .brand img { width: 44px; }
-    .wordmark { font-size: 1.15rem; }
+    .brand :global(.tag) { display: none; }
+  }
+  @media (max-width: 380px) {
+    .brand :global(.mark) { width: 2.4rem; }
   }
 </style>

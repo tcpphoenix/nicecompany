@@ -21,10 +21,10 @@ const pt = (radius: number, deg: number) =>
   `${(cx + radius * Math.cos(rad(deg))).toFixed(2)} ${(cy - radius * Math.sin(rad(deg))).toFixed(2)}`;
 
 // Math angles: 180° is the left end of the dial, 0° the right end.
-const spans: Record<Accent, [number, number]> = { fire: [180, 121.5], ice: [118.5, 61.5], water: [58.5, 0] };
-const needleAngle: Record<Accent, number> = { fire: -60, ice: 0, water: 60 };
+const spans: Record<string, [number, number]> = { fire: [180, 121.5], ice: [118.5, 61.5], water: [58.5, 0] };
+const needleAngle: Record<string, number> = { fire: -60, ice: 0, water: 60 };
 
-const segments = services.map((s) => {
+const segments = services.filter((s) => s.accent in spans).map((s) => {
   const [a1, a2] = spans[s.accent];
   const mid = (a1 + a2) / 2;
   const [ix, iy] = pt((R + r) / 2, mid).split(' ').map(Number);

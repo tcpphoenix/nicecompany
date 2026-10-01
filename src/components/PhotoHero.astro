@@ -52,7 +52,7 @@ const { image, alt, eyebrow, size = 'page', focus = '70% 50%' } = Astro.props;
     color: var(--white);
     overflow: hidden;
   }
-  .photo-hero--tall { min-height: clamp(34rem, 78vh, 46rem); }
+  .photo-hero--tall { min-height: clamp(30rem, 66vh, 38rem); }
   .photo-hero--page { min-height: clamp(26rem, 60vh, 34rem); }
 
   .bg {
@@ -74,24 +74,18 @@ const { image, alt, eyebrow, size = 'page', focus = '70% 50%' } = Astro.props;
   }
 
   .content { display: flex; align-items: center; padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem); }
-  .copy { display: grid; gap: 1.1rem; justify-items: start; max-width: 40rem; }
+  .copy { display: grid; gap: 1.1rem; justify-items: start; max-width: 48rem; }
   .eyebrow {
     font-weight: 800;
-    font-size: clamp(1.6rem, 1rem + 2.4vw, 2.9rem);
-    letter-spacing: 0.04em;
-    line-height: 1.1;
-    color: var(--white);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: var(--blue-300);
   }
-  .copy :global(h1) { color: var(--white); font-size: clamp(1.6rem, 1.1rem + 1.7vw, 2.5rem); max-width: 20em; }
+  .copy :global(h1) { color: var(--white); font-size: clamp(1.8rem, 1.2rem + 2.2vw, 3rem); max-width: 20em; }
   .copy :global(.lead) { color: rgb(255 255 255 / 0.82); }
   .copy :global(a:not([class])) { color: var(--white); }
 
-  .below {
-    position: relative;
-    border-top: 1px solid rgb(255 255 255 / 0.12);
-    background: rgb(11 20 32 / 0.55);
-    backdrop-filter: blur(6px);
-  }
+  .below { position: relative; padding-bottom: 1.5rem; }
 
   /* Phones: the text covers the photo's full width, so shade it evenly. */
   @media (max-width: 759px) {

@@ -10,12 +10,13 @@ const pages = {
   '/': 'index.html',
   '/gatboba/': 'gatboba/index.html',
   '/gagrileba/': 'gagrileba/index.html',
+  '/ventilacia/': 'ventilacia/index.html',
   '/tskalmomarageba/': 'tskalmomarageba/index.html',
   '/kontaqti/': 'kontaqti/index.html',
   '/biznesi/': 'biznesi/index.html',
   '/chven-shesakheb/': 'chven-shesakheb/index.html',
 };
-const servicePaths = ['/gatboba/', '/gagrileba/', '/tskalmomarageba/'];
+const servicePaths = ['/gatboba/', '/gagrileba/', '/ventilacia/', '/tskalmomarageba/'];
 
 const decode = (s) =>
   s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
@@ -107,7 +108,7 @@ test('/biznesi/ has business Service, FAQPage and BreadcrumbList data', () => {
 });
 
 test('service calendar is readable without colour', () => {
-  const html = read(pages['/biznesi/']);
+  const html = read(pages['/biznesi/']).match(/<table[^>]*class="[^"]*calendar[\s\S]*?<\/table>/)?.[0] ?? '';
   assert.match(html, /<table[^>]*class="[^"]*calendar/);
   assert.match(html, /<caption/);
   // every marked month carries a text label for screen readers
@@ -117,7 +118,7 @@ test('service calendar is readable without colour', () => {
   assert.equal(labels.length, marks.length);
 });
 
-for (const path of ['/', '/gatboba/', '/gagrileba/', '/tskalmomarageba/']) {
+for (const path of ['/', '/gatboba/', '/gagrileba/', '/ventilacia/', '/tskalmomarageba/']) {
   test(`${path} links to the business page`, () => {
     assert.match(read(pages[path]), /href="[^"]*\/biznesi\/"/);
   });
@@ -143,14 +144,6 @@ test('/chven-shesakheb/ is an About page with breadcrumbs', () => {
 
 test('header links to the About page', () => {
   assert.match(read(pages['/']), /href="[^"]*\/chven-shesakheb\/"/);
-});
-
-test('service card icon badge sits outside the clipped photo box', () => {
-  // A badge inside .media (overflow: hidden) is cut in half.
-  const html = read(pages['/']);
-  const media = html.match(/<div class="media"[^>]*>([\s\S]*?)<\/div>/);
-  assert.ok(media, 'service card media found');
-  assert.doesNotMatch(media[1], /class="badge"/);
 });
 
 test('hero photos stay light enough for phones', () => {

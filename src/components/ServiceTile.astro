@@ -1,0 +1,70 @@
+---
+// Home page service card from the Claude Design version: icon, name, summary, bullet list.
+import Icon, { type IconName } from './Icon.astro';
+import { href } from '../lib/href';
+import type { Service } from '../data/site';
+
+interface Props {
+  service: Service;
+}
+const { service } = Astro.props;
+const lineIcon: Record<string, IconName> = { fire: 'fire-line', ice: 'ice', air: 'air', water: 'water-line' };
+---
+<article class="tile">
+  <span class="ic"><Icon name={lineIcon[service.accent]} size={22} /></span>
+  <h3><a href={href(`/${service.slug}/`)}>{service.name}</a></h3>
+  <p class="sum">{service.summary}</p>
+  <ul>
+    {service.highlights.map((h) => <li>{h}</li>)}
+  </ul>
+  <span class="more" aria-hidden="true">დეტალურად <Icon name="arrow" size={16} /></span>
+</article>
+
+<style>
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem 1.4rem 1.4rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .tile:hover { transform: translateY(-2px); box-shadow: 0 20px 40px -28px rgb(11 20 32 / 0.5); }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    margin-bottom: 0.4rem;
+    border-radius: 50%;
+    background: #e7f0fd;
+    color: var(--blue-600);
+  }
+  h3 { font-size: 1.3rem; font-weight: 800; }
+  h3 a { text-decoration: none; }
+  /* The whole card is clickable through the heading link. */
+  h3 a::after { content: ''; position: absolute; inset: 0; }
+  .sum { color: var(--steel); font-size: 0.9rem; line-height: 1.5; padding-bottom: 0.75rem; border-bottom: 1px solid var(--line); }
+  ul { display: grid; margin-bottom: 1rem; }
+  li {
+    position: relative;
+    padding: 0.55rem 0 0.55rem 0.9rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border-bottom: 1px solid var(--line);
+  }
+  li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.05rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--blue);
+  }
+  .more { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: auto; font-weight: 800; color: var(--blue-600); }
+</style>

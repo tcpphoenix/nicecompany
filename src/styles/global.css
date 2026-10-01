@@ -108,6 +108,29 @@ img, svg { display: block; max-width: 100%; }
 .section-head p { color: var(--steel); }
 .section-head .label { color: var(--blue-600); }
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.1rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.98rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.btn svg { flex: none; transition: transform 0.2s ease; }
+.btn:hover svg { transform: translateX(3px); }
+.btn-primary { background: var(--blue); color: var(--white); box-shadow: 0 10px 24px -12px rgb(26 111 224 / 0.9); }
+.btn-primary:hover { background: var(--blue-600); }
+.btn-ghost { border: 1.5px solid rgb(255 255 255 / 0.45); color: var(--white); }
+.btn-ghost:hover { border-color: var(--white); }
+.btn-outline { border: 1.5px solid var(--line); color: var(--ink); background: var(--white); }
+.btn-outline:hover { border-color: var(--ink); }
+
 .skip {
   position: absolute;
   left: 1rem;

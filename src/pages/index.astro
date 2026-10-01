@@ -1,41 +1,54 @@
 ---
+// Home page — follows the approved Claude Design version (v2, 28.09.2026):
+// hero → services → work cycle → business block.
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PhotoHero from '../components/PhotoHero.astro';
-import Gauge from '../components/Gauge.astro';
-import Icon from '../components/Icon.astro';
-import ContactButtons from '../components/ContactButtons.astro';
-import ServiceCard from '../components/ServiceCard.astro';
-import Steps from '../components/Steps.astro';
-import Districts from '../components/Districts.astro';
-import CallBand from '../components/CallBand.astro';
-import AudienceChoice from '../components/AudienceChoice.astro';
-import { services, whyUs } from '../data/site';
+import Icon, { type IconName } from '../components/Icon.astro';
+import ServiceTile from '../components/ServiceTile.astro';
+import { services, cycle, business, telLink, phoneLocal } from '../data/site';
 import { href } from '../lib/href';
 import { mtavruli } from '../lib/mtavruli';
 import { photos } from '../lib/photos';
 import { businessSchema } from '../lib/schema';
 
 const root = new URL(import.meta.env.BASE_URL, Astro.site);
+const lineIcon: Record<string, IconName> = { fire: 'fire-line', ice: 'ice', air: 'air', water: 'water-line' };
+const contractPoints = business.offers[0].points;
+const sectorChips = [
+  'სასტუმროები',
+  'რესტორნები და კაფეები',
+  'ოფისები და ბიზნეს-ცენტრები',
+  'საცხოვრებელი ამხანაგობები',
+  'მაღაზიები და სუპერმარკეტები',
+  'კლინიკები, ბაღები და სკოლები',
+];
 ---
 <Base
   title="ნისეკომპანი — გათბობა, გაგრილება, წყალმომარაგება თბილისში"
-  description="ქვაბების, კონდიციონერების, ბოილერების და ტუმბოების შეკეთება და მონტაჟი თბილისის ყველა რაიონში. დაგვირეკეთ ან მოგვწერეთ WhatsApp-ზე და Viber-ზე."
+  description="გათბობის, გაგრილების, ვენტილაციის და წყალმომარაგების სისტემების პროექტირება, მონტაჟი და მომსახურება თბილისში — სახლებისა და ბიზნესისთვის."
   path="/"
+  current="home"
   schema={[businessSchema(root)]}
 >
-  <PhotoHero image={photos.hero} alt="გათბობის სისტემის მილები და მანომეტრები" eyebrow="სრული სერვისი" size="tall" focus="75% 50%">
-    <h1>გათბობის, გაგრილების და წყლის ხელოსანი თბილისში</h1>
-    <p class="hero-line">გათბობა • გაგრილება • წყალმომარაგება</p>
-    <p class="lead">ქვაბი, კონდიციონერი, ბოილერი, ტუმბო თუ მილები — მოვალთ, დავადგენთ მიზეზს და შევაკეთებთ. სახლებსა და ბიზნესს თბილისის ყველა რაიონში.</p>
-    <ContactButtons tone="light" />
+  <PhotoHero image={photos.hero} alt="გათბობის სისტემის მილები და მანომეტრები" eyebrow="სახლებისა და ბიზნესისთვის" size="tall" focus="75% 50%">
+    <h1 class="home-h1">
+      <span class="h-big">სრული სერვისი</span>
+      <span class="h-blue">გათბობა • გაგრილება • წყალმომარაგება</span>
+    </h1>
+    <p class="lead">პროექტირება, მონტაჟი და მომსახურება — ბინებიდან და სახლებიდან სასტუმროებამდე, ოფისებამდე და საწარმოებამდე.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href={telLink()}>დაგვიკავშირდით <Icon name="arrow" size={18} /></a>
+      <a class="btn btn-ghost" href={href('/biznesi/')}>კორპორატიული მომსახურება</a>
+    </div>
     <ul class="hero-icons" slot="below">
       {services.map((s) => (
         <li>
-          <a href={href(`/${s.slug}/`)} data-accent={s.accent}>
-            <span class="ring"><Icon name={s.accent} size={24} /></span>
+          <a href={href(`/${s.slug}/`)}>
+            <span class="ring"><Icon name={lineIcon[s.accent]} size={20} /></span>
             <span class="txt">
               <span class="nm">{s.name}</span>
-              <span class="sm">{s.summary}</span>
+              <span class="sm">{s.short}</span>
             </span>
           </a>
         </li>
@@ -43,180 +56,186 @@ const root = new URL(import.meta.env.BASE_URL, Astro.site);
     </ul>
   </PhotoHero>
 
-  <section class="audience" aria-label="ვისთვის">
-    <div class="wrap">
-      <AudienceChoice />
-    </div>
-  </section>
-
-  <section class="section" id="services" aria-labelledby="services-title">
+  <section class="section services" id="services" aria-labelledby="services-title">
     <div class="wrap">
       <div class="services-head">
-        <div class="section-head">
-          <p class="label">{mtavruli('ჩვენი სერვისები')}</p>
-          <h2 id="services-title">პროფესიონალური მომსახურება ყველა მიმართულებით</h2>
+        <div>
+          <p class="label">{mtavruli('სერვისები')}</p>
+          <h2 id="services-title">საინჟინრო სისტემები — პროექტიდან სერვისამდე</h2>
         </div>
         <p class="services-intro">
-          ვაკეთებთ გათბობის, გაგრილების და წყალმომარაგების სისტემების მონტაჟს, შეკეთებას და მომსახურებას —
-          ქვაბებიდან და კონდიციონერებიდან ჩილერებამდე, ტუმბოებამდე და საქვაბეებამდე.
+          ვაწყობთ, ვაკეთებთ და ვემსახურებით სისტემებს ბინებში, სახლებში, სასტუმროებში, რესტორნებში, ოფისებსა და
+          საწარმოებში. ვმუშაობთ ნებისმიერი ბრენდის დანადგარზე.
         </p>
       </div>
-      <div class="cards">
-        {services.map((s) => <ServiceCard service={s} />)}
+      <div class="tiles">
+        {services.map((s) => <ServiceTile service={s} />)}
       </div>
     </div>
   </section>
 
-  <section class="dial-section" aria-labelledby="dial-title">
-    <div class="wrap dial-grid">
-      <div class="dial-copy">
-        <p class="label">{mtavruli('სწრაფი არჩევანი')}</p>
-        <h2 id="dial-title">რა გაფუჭდა? აირჩიეთ სისტემა</h2>
-        <p>მიუთითეთ ისარი გათბობაზე, გაგრილებაზე ან წყალზე და გადადით შესაბამის გვერდზე — იქ ნახავთ ხშირ პრობლემებს და იმას, თუ როგორ ვაგვარებთ მათ.</p>
-      </div>
-      <div class="dial-panel">
-        <Gauge tone="dark" />
-      </div>
-    </div>
-  </section>
-
-  <section class="section why" aria-labelledby="why-title">
+  <section class="section cycle" aria-labelledby="cycle-title">
     <div class="wrap">
-      <div class="section-head">
-        <p class="label">{mtavruli('რატომ ჩვენ')}</p>
-        <h2 id="why-title">მარტივად და გასაგებად</h2>
-      </div>
-      <ul class="why-list">
-        {whyUs.map((w) => (
+      <p class="label">{mtavruli('როგორ ვმუშაობთ')}</p>
+      <h2 id="cycle-title">ერთი გუნდი — სრული ციკლი</h2>
+      <ol class="cycle-list">
+        {cycle.map((c, i) => (
           <li>
-            <h3>{w.title}</h3>
-            <p>{w.text}</p>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </div>
           </li>
         ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="biz" aria-labelledby="biz-title">
+    <div class="biz-photo">
+      <Image src={photos.business} alt="ტექნიკოსი სახურავზე მდგარ დანადგარს ემსახურება" widths={[480, 800, 1100]} sizes="(max-width: 899px) 100vw, 42vw" loading="lazy" />
+    </div>
+    <div class="biz-body">
+      <p class="label">{mtavruli('ბიზნესისთვის')}</p>
+      <h2 id="biz-title">კორპორატიული კლიენტების მომსახურება</h2>
+      <p class="biz-lead">{business.intro}</p>
+      <ul class="checks">
+        {contractPoints.map((pt) => (
+          <li><span class="tick"><Icon name="check" size={14} /></span>{pt}</li>
+        ))}
       </ul>
-    </div>
-  </section>
-
-  <section class="section steps-section" aria-labelledby="steps-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="label">{mtavruli('როგორ ვმუშაობთ')}</p>
-        <h2 id="steps-title">ზარიდან შეკეთებამდე</h2>
+      <ul class="chips">
+        {sectorChips.map((c) => <li>{c}</li>)}
+      </ul>
+      <div class="biz-actions">
+        <a class="btn btn-primary" href={href('/biznesi/')}>მოითხოვეთ შეთავაზება <Icon name="arrow" size={18} /></a>
+        <a class="btn btn-ghost" href={telLink()}>{phoneLocal()}</a>
       </div>
-      <Steps />
     </div>
   </section>
-
-  <section class="section districts-section">
-    <div class="wrap">
-      <Districts />
-    </div>
-  </section>
-
-  <CallBand
-    title="რამე გაფუჭდა?"
-    text="დაგვირეკეთ ან მოგვწერეთ — გვითხარით, რა პრობლემაა და რომელ რაიონში ხართ."
-  />
 </Base>
 
 <style>
-  .hero-line {
-    font-weight: 800;
-    font-size: var(--step-1);
-    color: var(--blue-300);
-    letter-spacing: 0.01em;
-  }
+  .home-h1 { display: grid; gap: 0.35rem; }
+  .h-big { font-size: clamp(2.3rem, 1.4rem + 3.6vw, 4.2rem); line-height: 1.05; }
+  .h-blue { font-size: clamp(1.2rem, 0.85rem + 1.4vw, 1.95rem); color: var(--blue-300); line-height: 1.25; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.4rem; }
 
   .hero-icons {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    padding-block: 1.1rem;
+    grid-template-columns: repeat(4, auto);
+    justify-content: start;
+    gap: 1rem 2.75rem;
   }
-  .hero-icons a {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    text-decoration: none;
-    color: var(--white);
-  }
+  .hero-icons a { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--white); }
   .ring {
     display: grid;
     place-items: center;
-    width: 3.1rem;
-    height: 3.1rem;
+    width: 2.9rem;
+    height: 2.9rem;
     flex: none;
     border-radius: 50%;
-    border: 2px solid var(--accent);
-    background: rgb(255 255 255 / 0.06);
-    color: var(--accent);
+    border: 1.5px solid rgb(127 181 255 / 0.55);
+    color: var(--blue-300);
     transition: background 0.2s ease;
   }
-  [data-accent='fire'] .ring { color: #ff8a5c; }
-  [data-accent='ice'] .ring { color: var(--blue-300); }
-  [data-accent='water'] .ring { color: #4fd1d1; }
-  .hero-icons a:hover .ring { background: rgb(255 255 255 / 0.14); }
+  .hero-icons a:hover .ring { background: rgb(255 255 255 / 0.1); }
   .txt { display: grid; line-height: 1.35; }
-  .nm { font-weight: 800; }
-  .sm { font-size: 0.85rem; color: rgb(255 255 255 / 0.72); }
+  .nm { font-weight: 800; font-size: 0.95rem; }
+  .sm { font-size: 0.8rem; color: rgb(255 255 255 / 0.7); }
 
-  .audience { padding-top: clamp(2.5rem, 1.5rem + 3vw, 4rem); }
-  #services { scroll-margin-top: 6.5rem; }
-
+  .services { background: var(--mist); }
+  #services { scroll-margin-top: 6rem; }
   .services-head {
     display: grid;
     grid-template-columns: 1.1fr 1fr;
     gap: 1rem 4rem;
     align-items: end;
-    margin-bottom: clamp(2rem, 1rem + 3vw, 3.5rem);
+    margin-bottom: clamp(2rem, 1rem + 3vw, 3rem);
   }
-  .services-head .section-head { margin-bottom: 0; }
+  .services-head .label { margin-bottom: 0.6rem; }
+  .services-head h2 { font-size: clamp(1.8rem, 1.2rem + 1.9vw, 2.6rem); }
   .services-intro { color: var(--steel); }
-  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; }
 
-  .dial-section {
-    background: var(--navy-900);
+  .cycle { background: var(--white); }
+  .cycle h2 { margin: 0.6rem 0 clamp(2rem, 1rem + 2.5vw, 3rem); font-size: clamp(1.8rem, 1.2rem + 1.9vw, 2.6rem); }
+  .cycle-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.75rem; }
+  .cycle-list li {
+    position: relative;
+    padding-top: 1.25rem;
+    border-top: 2px solid var(--line);
+  }
+  /* Short blue segment over the grey rule, as in the design. */
+  .cycle-list li::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 3rem;
+    height: 2px;
+    background: var(--blue);
+  }
+  .num { display: block; font-weight: 800; font-size: 0.85rem; color: var(--blue-600); margin-bottom: 0.6rem; font-variant-numeric: tabular-nums; }
+  .cycle-list h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+  .cycle-list p { color: var(--steel); font-size: 0.92rem; line-height: 1.55; }
+
+  .biz { display: grid; grid-template-columns: 0.72fr 1fr; background: var(--navy-900); color: var(--white); }
+  .biz-photo { position: relative; min-height: 22rem; }
+  .biz-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .biz-body { padding: clamp(2.5rem, 1.5rem + 4vw, 5rem) clamp(1.25rem, 0.5rem + 4vw, 5rem); max-width: 46rem; }
+  .biz-body .label { color: var(--blue-300); }
+  .biz-body h2 { color: var(--white); margin: 0.6rem 0 1rem; font-size: clamp(1.8rem, 1.3rem + 2vw, 2.8rem); }
+  .biz-lead { color: rgb(255 255 255 / 0.78); max-width: 34rem; }
+  .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 1.75rem; margin: 1.6rem 0; }
+  .checks li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.92rem; line-height: 1.45; }
+  .tick {
+    display: grid;
+    place-items: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    flex: none;
+    margin-top: 0.1rem;
+    border-radius: 50%;
+    background: var(--blue);
     color: var(--white);
-    padding-block: clamp(3.5rem, 2rem + 5vw, 6rem);
   }
-  .dial-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: clamp(2rem, 1rem + 4vw, 5rem);
-    align-items: center;
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.75rem; }
+  .chips li {
+    padding: 0.35rem 0.85rem;
+    border: 1px solid rgb(255 255 255 / 0.3);
+    border-radius: 999px;
+    font-size: 0.85rem;
   }
-  .dial-grid > * { min-width: 0; }
-  .dial-copy { display: grid; gap: 1rem; }
-  .dial-copy .label { color: var(--blue-300); }
-  .dial-copy h2 { color: var(--white); }
-  .dial-copy p:last-child { color: rgb(255 255 255 / 0.75); max-width: 30rem; }
-  .dial-panel {
-    background: var(--navy-800);
-    border: 1px solid rgb(255 255 255 / 0.08);
-    border-radius: 24px;
-    padding: clamp(1.25rem, 0.8rem + 2vw, 2.25rem);
-  }
-
-  .why { background: var(--white); border-bottom: 1px solid var(--line); }
-  .why-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-  }
-  .why-list li { display: grid; gap: 0.6rem; align-content: start; padding-top: 1.25rem; border-top: 3px solid var(--blue); }
-  .why-list p { color: var(--steel); }
-
-  .districts-section { padding-top: 0; }
+  .biz-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
   @media (max-width: 1099px) {
-    .why-list { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
-    .cards { grid-template-columns: repeat(2, 1fr); }
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+    .hero-icons { grid-template-columns: repeat(2, auto); }
   }
   @media (max-width: 899px) {
-    .services-head, .dial-grid { grid-template-columns: 1fr; }
-    .hero-icons { grid-template-columns: 1fr; gap: 0.75rem; }
+    .services-head, .biz { grid-template-columns: 1fr; }
+    .biz-photo { min-height: 15rem; }
+    .cycle-list { grid-template-columns: 1fr; gap: 1.5rem; }
+    /* Phones: the step number sits in a circle beside the text. */
+    .cycle-list li { display: flex; gap: 1rem; padding-top: 0; border-top: 0; }
+    .cycle-list li::before { display: none; }
+    .num {
+      display: grid;
+      place-items: center;
+      width: 2.6rem;
+      height: 2.6rem;
+      flex: none;
+      margin: 0;
+      border: 1.5px solid var(--blue);
+      border-radius: 50%;
+    }
   }
   @media (max-width: 599px) {
-    .why-list, .cards { grid-template-columns: 1fr; gap: 2rem; }
+    .tiles, .checks { grid-template-columns: 1fr; }
+    .hero-icons { grid-template-columns: 1fr; gap: 0; }
+    .hero-icons li { padding: 0.75rem 0; border-top: 1px solid rgb(255 255 255 / 0.12); }
+    .hero-actions .btn { width: 100%; }
   }
 </style>

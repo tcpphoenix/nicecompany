@@ -21,13 +21,15 @@ Business details are edited in `src/data/site.ts` (search for `TODO_KOBA`).
 - [ ] **Contract promises.** Page promises: scheduled visits, seasonal preparation, priority call-outs, a record of all work done. Confirm he can deliver all four.
 - [ ] **Business references.** Any hotels / restaurants / offices he already serves (with permission) — strongest proof for business clients.
 
-## Koba's design (ChatGPT image, "ვებგვერდის შექმნა.html") — decide before matching it
+## Claude Design version (live as preview since 2026-10-01) — confirm with Koba before the real launch
 
-The live site follows the direction of Koba's design but not its exact layout. Before rebuilding to match it:
-- [ ] **Logo:** new "NISE COMPANY" (blue N) from his design, or keep the original round logo? (No file for the new one — would need redrawing.)
-- [ ] **Numbers strip:** his design says "17 technicians", "100% satisfied", "all of Georgia" — invented by ChatGPT. Get real numbers, or show true facts instead (1-month warranty, all Tbilisi districts, Mon–Sat 10:00–18:00).
-- [ ] **Dial:** his design has none — remove it?
-- [ ] Then: 5 service cards (boilers, ACs, fan coils, pumps, water supply), "რატომ ნისე კომპანია?" block with technician photo, "თქვენი კომფორტი" block, bottom contact bar — with matching free photos.
+Built from "Nisekompani home page redesign.pdf" (v2, 28.09.2026), including its sign-off sheet items:
+- [ ] **New logo** (blue "N" + ნისე კომპანი) — approve or change.
+- [ ] **Ventilation** (new service + page `/ventilacia/`): recuperators, AHU, rooftop units, kitchen exhaust — does Koba do these?
+- [ ] **New items** on other services: cascade boiler systems, heat pumps, VRF/VRV, multi-zone systems, sewage & drainage — confirm each.
+- [ ] **Work cycle** "inspection & design → installation → testing → service" — confirm he does design/projects.
+- [ ] **Photos** are stock (see `src/assets/photos/CREDITS.md`) — replace with real ones.
+Anything he doesn't confirm is removed in `src/data/site.ts` before the domain goes live.
 
 ## Domain: `nisecompany.ge`
 
